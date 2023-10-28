@@ -1,38 +1,92 @@
 <?xml version="1.0" ?>
 <sdf version="1.7">
+    <world name="default">
 
-    <physics type="dart">
-        <max_step_size>0.004</max_step_size>
-        <real_time_factor>1.02</real_time_factor>
-        <real_time_update_rate>250</real_time_update_rate>
-    </physics>
+        <physics type="dart">
+            <max_step_size>0.004</max_step_size>
+            <real_time_factor>1.02</real_time_factor>
+            <real_time_update_rate>250</real_time_update_rate>
+        </physics>
 
-    <plugin filename="gz-sim-physics-system" name="gz::sim::systems::Physics"> </plugin>
-    <plugin filename="gz-sim-user-commands-system" name="gz::sim::systems::UserCommands"> </plugin>
-    <plugin filename='gz-sim-scene-broadcaster-system' name='gz::sim::systems::SceneBroadcaster'> </plugin>
-    <plugin filename="gz-sim-contact-system" name="gz::sim::systems::Contact"></plugin>
-    <plugin filename="gz-sim-altimeter-system" name="gz::sim::systems::Altimeter"></plugin>
-    <plugin filename="gz-sim-imu-system"  name="gz::sim::systems::Imu"></plugin>
-    <plugin filename="gz-sim-air-pressure-system" name="gz::sim::systems::AirPressure"> </plugin> 
-    <plugin name='gz::sim::systems::Sensors' filename='gz-sim-sensors-system'> 
-        <render_engine>ogre2</render_engine> 
-    </plugin>
+        <plugin filename="gz-sim-physics-system" name="gz::sim::systems::Physics"> </plugin>
+        <plugin filename="gz-sim-user-commands-system" name="gz::sim::systems::UserCommands"> </plugin>
+        <plugin filename='gz-sim-scene-broadcaster-system' name='gz::sim::systems::SceneBroadcaster'> </plugin>
+        <plugin filename="gz-sim-contact-system" name="gz::sim::systems::Contact"></plugin>
+        <plugin filename="gz-sim-altimeter-system" name="gz::sim::systems::Altimeter"></plugin>
+        <plugin filename="gz-sim-imu-system"  name="gz::sim::systems::Imu"></plugin>
+        <plugin filename="gz-sim-air-pressure-system" name="gz::sim::systems::AirPressure"> </plugin> 
+        <plugin name='gz::sim::systems::Sensors' filename='gz-sim-sensors-system'> 
+            <render_engine>ogre2</render_engine> 
+        </plugin>
 
-    <!-- <gui fullscreen="0">
+        <!-- <gui fullscreen="0">
 
 
-    </gui> -->
+        </gui> -->
 
-    <include>
-        <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Depot</uri>
-    </include>
-
-    <include>
-        <uri>
-        https://fuel.gazebosim.org/1.0/MovAi/models/Warehouse
-        </uri>
+        <include>
+            <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Urban Service Room Straight Lights</uri>
         </include>
-    
 
+        <include>
+            <pose>0 0 0.5 0 0 0</pose>
+            <uri>obstacle/model.sdf</uri> 
+        </include>
 
+        <actor name="actor_walking">
+            <skin>
+                <filename>https://fuel.gazebosim.org/1.0/Mingfei/models/actor/tip/files/meshes/walk.dae</filename>
+                <scale>1.0</scale>
+            </skin>
+            <script>
+              <loop>true</loop>
+              <delay_start>0.000000</delay_start>
+              <auto_start>true</auto_start>
+              <trajectory id="0" type="walk" tension="0.6">
+                <waypoint>
+                    <time>0</time>
+                    <pose>0 -2.0 1.0 0 0 0</pose>
+                </waypoint>
+                <waypoint>
+                    <time>10</time>
+                    <pose>8.0 -2.0 1.0 0 0 0</pose>
+                </waypoint>
+                <waypoint>
+                    <time>11</time>
+                    <pose>8.0 -2.0 1.0 0 0 3.14</pose>
+                </waypoint>
+                <waypoint>
+                    <time>21</time>
+                    <pose>0 -2.0 1.0 0 0 3.14</pose>
+                </waypoint>
+                <waypoint>
+                  <time>22</time>
+                  <pose>0.0 -2.0 1.0 0 0 0</pose>
+                </waypoint>
+              </trajectory>
+            </script>
+            <pose>5 -3 0 0 0 1.57</pose>
+          </actor>
+
+        <light name='sun' type='directional'>
+            <pose>-5 -3 10 0 -0 0</pose>
+            <cast_shadows>true</cast_shadows>
+            <intensity>1</intensity>
+            <direction>0 0 -1</direction>
+            <diffuse>1 1 1 1</diffuse>
+            <specular>1 1 1 1</specular>
+            <attenuation>
+                <range>10</range>
+                <linear>1</linear>
+                <constant>1</constant>
+                <quadratic>0</quadratic>
+            </attenuation>
+            <spot>
+                <inner_angle>0</inner_angle>
+                <outer_angle>0</outer_angle>
+                <falloff>0</falloff>
+            </spot>
+            <light_on>false</light_on>
+        </light>
+    </world>
 </sdf>
