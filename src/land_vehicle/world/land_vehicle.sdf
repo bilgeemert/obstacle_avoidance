@@ -1,0 +1,38 @@
+<?xml version="1.0" ?>
+<sdf version="1.7">
+
+    <physics type="dart">
+        <max_step_size>0.004</max_step_size>
+        <real_time_factor>1.02</real_time_factor>
+        <real_time_update_rate>250</real_time_update_rate>
+    </physics>
+
+    <plugin filename="gz-sim-physics-system" name="gz::sim::systems::Physics"> </plugin>
+    <plugin filename="gz-sim-user-commands-system" name="gz::sim::systems::UserCommands"> </plugin>
+    <plugin filename='gz-sim-scene-broadcaster-system' name='gz::sim::systems::SceneBroadcaster'> </plugin>
+    <plugin filename="gz-sim-contact-system" name="gz::sim::systems::Contact"></plugin>
+    <plugin filename="gz-sim-altimeter-system" name="gz::sim::systems::Altimeter"></plugin>
+    <plugin filename="gz-sim-imu-system"  name="gz::sim::systems::Imu"></plugin>
+    <plugin filename="gz-sim-air-pressure-system" name="gz::sim::systems::AirPressure"> </plugin> 
+    <plugin name='gz::sim::systems::Sensors' filename='gz-sim-sensors-system'> 
+        <render_engine>ogre2</render_engine> 
+    </plugin>
+
+    <!-- <gui fullscreen="0">
+
+
+    </gui> -->
+
+    <include>
+        <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Depot</uri>
+    </include>
+
+    <include>
+        <uri>
+        https://fuel.gazebosim.org/1.0/MovAi/models/Warehouse
+        </uri>
+        </include>
+    
+
+
+</sdf>
