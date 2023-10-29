@@ -82,6 +82,13 @@ command = Node(
             output="screen"
           )
 
+shutdown = RegisterEventHandler(
+            event_handler=OnProcessExit(
+              target_action=simulation,
+              on_exit=[EmitEvent(event=Shutdown)]
+            )
+          )
+
 def generate_launch_description():
     return LaunchDescription([
         serial_node,
@@ -92,5 +99,7 @@ def generate_launch_description():
         bridge_control,
         bridge_lidar,
         bridge_camera,
-        bridge_imu
+        bridge_imu,
+
+        shutdown
     ]) 
