@@ -8,8 +8,8 @@ Command::Command() : Node("command_node"){
 
 void Command::commandCallback(const joyMsg & msg){
     twistMsg data;
-    data.linear.x  = msg.axes[0];
-    data.angular.z = msg.axes[1];
+    data.linear.x  = UPDATE_DATA(msg.axes[0]);
+    data.angular.z = UPDATE_DATA(msg.axes[1]);
     joy_pub->publish(data);
 }
 

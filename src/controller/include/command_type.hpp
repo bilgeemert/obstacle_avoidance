@@ -1,6 +1,11 @@
 #ifndef __COMMAND_TYPE_HPP__
 #define __COMMAND_TYPE_HPP__
 
+#include <cmath>
+
+#define OFSET 0.1f
+#define UPDATE_DATA(x) (abs(x) > OFSET ? x : 0.0f) 
+
 typedef enum {
   LINEAR, ANGULAR, SPEED_ALL_DATA
 } Joy_e;
