@@ -239,6 +239,7 @@
             <sensor name="imu_sensor" type="imu">
                 <always_on>1</always_on>
                 <update_rate>500</update_rate>
+                <topic>imu</topic>
                 <imu>
                     <enable_orientation>0</enable_orientation>
                     <angular_velocity>
@@ -353,7 +354,8 @@
             </visual>
             <sensor name="front_laser" type="gpu_ray">
                 <pose>0.08 0 0.394 0 0 0</pose>
-                <update_rate>10</update_rate>
+                <update_rate>5</update_rate>
+                <topic>lidar</topic>
                 <lidar>
                     <scan>
                         <horizontal>
@@ -377,7 +379,7 @@
                     <noise>
                         <type>gaussian</type>
                         <mean>0</mean>
-                        <stddev>0.1</stddev>
+                        <stddev>0.01</stddev>
                     </noise>
                 </lidar>
             </sensor>
