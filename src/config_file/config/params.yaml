@@ -1,0 +1,4 @@
+serial_comm_node:
+  ros__parameters:
+    file_name: "/dev/ttyUSB0"
+    
