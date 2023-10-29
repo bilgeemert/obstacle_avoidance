@@ -161,6 +161,7 @@
                 </geometry>
             </visual>
             <light name="left_light_source" type="spot">
+                <visualize>false</visualize>
                 <pose frame="">0.514147 0.216803 0.180 3.14159 1.56859 0</pose>
                 <attenuation>
                     <range>10</range>
@@ -179,9 +180,10 @@
                 <cast_shadows>1</cast_shadows>
             </light>
             <!-- <light name="center_left_light" type="spot">
+                <visualize>false</visualize>
                 <pose frame="">0.538 0.0844 0.180 3.14159 1.56859 0</pose>
                 <attenuation>
-                    <range>50</range>
+                    <range>10</range>
                     <linear>0</linear>
                     <constant>0.1</constant>
                     <quadratic>0.0025</quadratic>
@@ -195,11 +197,12 @@
                 </spot>
                 <direction>0 0 -1</direction>
                 <cast_shadows>1</cast_shadows>
-            </light> -->
-            <!-- <light name="center_right_light" type="spot">
+            </light>
+            <light name="center_right_light" type="spot">
+                <visualize>false</visualize>
                 <pose frame="">0.538 -0.0844 0.180 3.14159 1.56859 0</pose>
                 <attenuation>
-                    <range>50</range>
+                    <range>10</range>
                     <linear>0</linear>
                     <constant>0.1</constant>
                     <quadratic>0.0025</quadratic>
@@ -216,6 +219,7 @@
             </light> -->
             <light name="right_light_source" type="spot">
                 <pose frame="">0.514147 -0.216803 0.180 3.14159 1.56859 0</pose>
+                <visualize>false</visualize>
                 <attenuation>
                     <range>10</range>
                     <linear>0</linear>

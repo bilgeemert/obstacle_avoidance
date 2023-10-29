@@ -11,10 +11,22 @@ from launch.actions import RegisterEventHandler, EmitEvent
 from launch.event_handlers import OnProcessExit
 from launch.events import Shutdown
 
+land_vehicle_path     = get_package_share_directory("land_vehicle")
+simulation_world_path = Path(land_vehicle_path, "world", "land_vehicle.sdf")
+simulation_model_path = Path(land_vehicle_path, "models")
+
 config_file = os.path.join(
     get_package_share_directory('config_file'),
     'config',
     'params.yaml'
+  )
+
+simulation = ExecuteProcess(
+    cmd=["gz", "sim", "-r", simulation_world_path]
+  )
+
+rviz = ExecuteProcess(
+    cmd=["rviz2"]
   )
 
 serial_node = Node(
@@ -24,7 +36,61 @@ serial_node = Node(
             output="screen"
           )
 
+bridge_control = Node(
+            package="ros_gz_bridge",                                               # ros_ign_bridge eski versiyonda kullanılır.
+            executable="parameter_bridge",
+            arguments=[
+                "/cmd_vel@geometry_msgs/msg/Twist]gz.msgs.Twist"
+            ],
+            output="screen"
+          )
+
+
+bridge_lidar = Node(
+            package="ros_gz_bridge",
+            executable="parameter_bridge",
+            arguments=[
+                # "/lidar@sensor_msgs/msg/LaserScan[gz.msgs.LaserScan"  # Sadece bir ekseni veriyor
+                "/lidar/points@sensor_msgs/msg/PointCloud2[gz.msgs.PointCloudPacked"
+            ],
+            remappings=[("/lidar/points","/lidar")],
+          )
+
+bridge_camera = Node(
+            package="ros_gz_bridge",
+            executable="parameter_bridge",
+            arguments=[
+                "/camera@sensor_msgs/msg/Image[gz.msgs.Image"
+            ]
+          )
+
+bridge_imu = Node(
+            package="ros_gz_bridge",
+            executable="parameter_bridge",
+            arguments=[
+                "/imu@sensor_msgs/msg/Imu[gz.msgs.IMU"
+            ]
+          )
+
+command = Node(
+            package="controller",                                               # ros_ign_bridge eski versiyonda kullanılır.
+            executable="command_node",
+            # ros_arguments=[
+                # "--log-level", "Command_node:=debug",
+                # "--remap", "Command_node:=my_command_node"
+            # ],
+            output="screen"
+          )
+
 def generate_launch_description():
     return LaunchDescription([
-        serial_node       
+        serial_node,
+        simulation,
+        command,
+        # rviz,
+
+        bridge_control,
+        bridge_lidar,
+        bridge_camera,
+        bridge_imu
     ]) 

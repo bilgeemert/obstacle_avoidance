@@ -89,8 +89,8 @@ void SerialComm::dataRead(){
             data.state = 0;
             data.prev_byte = data.curr_byte;
             if(data.curr_byte == FOOTHER_){
-                msg.axes[1]    = mapValues(static_cast<float>(data.buffer[JOY_X]), 0, 200, -1, 1);
                 msg.axes[0]    = mapValues(static_cast<float>(data.buffer[JOY_Y]), 0, 200, -1, 1);
+                msg.axes[1]    = mapValues(static_cast<float>(data.buffer[JOY_X]), 0, 200, 1, -1);
                 msg.buttons[1] = static_cast<int>(data.buffer[OBS_FLAG]);
                 msg.buttons[0] = static_cast<int>(data.buffer[ARM_FLAG]);
                 joy_pub->publish(msg);
