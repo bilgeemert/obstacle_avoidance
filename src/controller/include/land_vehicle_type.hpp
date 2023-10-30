@@ -1,5 +1,5 @@
-#ifndef __COMMAND_TYPE_HPP__
-#define __COMMAND_TYPE_HPP__
+#ifndef __LAND_VEHICLE_TYPE_HPP__
+#define __LAND_VEHICLE_TYPE_HPP__
 
 #include <cmath>
 
