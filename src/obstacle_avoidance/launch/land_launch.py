@@ -72,13 +72,9 @@ bridge_imu = Node(
             ]
           )
 
-command = Node(
+controller = Node(
             package="controller",                                               # ros_ign_bridge eski versiyonda kullanılır.
-            executable="command_node",
-            # ros_arguments=[
-                # "--log-level", "Command_node:=debug",
-                # "--remap", "Command_node:=my_command_node"
-            # ],
+            executable="controller_node",
             output="screen"
           )
 
@@ -93,7 +89,7 @@ def generate_launch_description():
     return LaunchDescription([
         serial_node,
         simulation,
-        command,
+        # controller,
         # rviz,
 
         bridge_control,
