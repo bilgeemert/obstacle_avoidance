@@ -1,18 +1,45 @@
 #ifndef __OBSTACLE_AVOIDANCE_HPP__
 #define __OBSTACLE_AVOIDANCE_HPP__
 
+#include <vector>
+
+#include <pcl/io/pcd_io.h>
+#include <pcl/point_cloud.h>
+#include <pcl/point_types.h>
+#include <pcl/kdtree/kdtree.h>
+#include <pcl/filters/extract_indices.h>
+#include <pcl/filters/conditional_removal.h>
+#include <pcl/segmentation/extract_clusters.h>
+#include <pcl_conversions/pcl_conversions.h>
+
+#include "land_vehicle_type.hpp"
+#include "geometry_utils.hpp"
+
 #define VERTICAL   181 
 #define HORIZONTAL 360
 #define ERROR (-1)
 #define OK    (1)
 
+typedef struct {
+    pcl::PCLPointCloud2 merged;
+	pcl::PointCloud<pcl::PointXYZ> cloud;
+}pcl_t;
 
-// class ObstacleAvoidance{
-// private:
+using pointIndicesMsg = std::vector<pcl::PointIndices>;
+using pointXYZMsg = pcl::PointCloud<pcl::PointXYZ>;
 
-// protected:
+class ObstacleAvoidance{
+private:
+    std::array<std::array<float, VERTICAL>, HORIZONTAL> histogram;
 
-// public:
-// };
+protected:
+    std::vector<double> rules;
+
+public:
+    void detectObject(pointXYZMsg&);
+    void getClusterPoint(pointIndicesMsg& , pointXYZMsg&);
+    void updateHistogram(float*);
+    void clearHistogram();
+};
 
 #endif

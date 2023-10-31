@@ -3,6 +3,7 @@
 using namespace std::placeholders;
 
 LandVehicle::LandVehicle() : Node("land_vehicle_node"){
+    declareParameters();
     sub.joy = this->create_subscription<joyMsg>("joy", 10, std::bind(
                                 &LandVehicle::joyCallback, this, _1));
     sub.cloud = this->create_subscription<pointCloudMsg>("/lidar", 100, std::bind(
@@ -30,6 +31,12 @@ void LandVehicle::pointCloudCallback(const pointCloudMsg &msg){
             pcl_data.cloud.points[i].z = 0.0f;
         }
     }
+    detectObject(pcl_data.cloud);
+}
+
+void LandVehicle::declareParameters(){
+    this->declare_parameter("rules", std::vector<double> (4, 0.0)); 
+    rules = this->get_parameter("rules").as_double_array();
 }
 
 int main(int argc, char* argv[]){
