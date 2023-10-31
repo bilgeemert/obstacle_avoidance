@@ -7,16 +7,7 @@
 #include "geometry_msgs/msg/twist.hpp"
 #include "sensor_msgs/msg/point_cloud2.hpp"
 
-#include <pcl/io/pcd_io.h>
-#include <pcl/point_cloud.h>
-#include <pcl/point_types.h>
-#include <pcl/kdtree/kdtree.h>
-#include <pcl/filters/extract_indices.h>
-#include <pcl/filters/conditional_removal.h>
-#include <pcl/segmentation/extract_clusters.h>
-#include <pcl_conversions/pcl_conversions.h>
-
-#include "land_vehicle_type.hpp"
+#include "obstacle_avoidance.hpp"
 #include "command.hpp"
 
 using joyMsg = sensor_msgs::msg::Joy;
@@ -33,12 +24,7 @@ typedef struct{
     rclcpp::Publisher<twistMsg>::SharedPtr joy;
 } pub_t;
 
-typedef struct {
-    pcl::PCLPointCloud2 merged;
-	pcl::PointCloud<pcl::PointXYZ> cloud;
-}pcl_t;
-
-class LandVehicle : public rclcpp::Node{
+class LandVehicle : public rclcpp::Node, public ObstacleAvoidance{
 private:
     pub_t pub;
     sub_t sub;
@@ -48,6 +34,7 @@ public:
     LandVehicle();
     void joyCallback(const joyMsg &);
     void pointCloudCallback(const pointCloudMsg &);
+    void declareParameters();
 };
 
 #endif
