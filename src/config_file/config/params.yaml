@@ -2,3 +2,10 @@ serial_comm_node:
   ros__parameters:
     file_name: "/dev/ttyUSB0"
     
+land_vehicle_node:
+  ros__parameters:
+    rules:
+      - 2.00   # Threshold Distance
+      - 0.39   # Safety Distance
+      - 0.19   # Vehicle Radius
+      - 0.30   # Object Width 
