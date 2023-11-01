@@ -34,16 +34,13 @@ void ObstacleAvoidance::getClusterPoint(pointIndicesMsg& indices_c, pointXYZMsg&
 
 void ObstacleAvoidance::updateHistogram(float* cc_data){
     float distance = sqrtf(powf(cc_data[X], 2) + powf(cc_data[Y], 2) + powf(cc_data[Z], 2));
-    if(distance < 1.0){
-        std::cout << "distance: " << distance << std::endl;
-
-    }
+    // std::cout  << "distance: " << distance << std::endl;
     if((distance > 0.0) && (distance <= rules[THRESHOLD_DIS])){
         Coordinate_t spherical;
         cartesian2Spherical(cc_data, spherical.pos);
         histogram[spherical.pos[PHI]][spherical.pos[THETA]] = spherical.pos[RADIUS];
-        // std::cout << "Phi: " << spherical.pos[PHI] << " Theta: " 
-        //           << spherical.pos[THETA] << " Radius: " << spherical.pos[RADIUS] << std::endl;
+        std::cout << "Phi: " << spherical.pos[PHI] << " Theta: " 
+                  << spherical.pos[THETA] << " Radius: " << spherical.pos[RADIUS] << std::endl;
     }
 }
 

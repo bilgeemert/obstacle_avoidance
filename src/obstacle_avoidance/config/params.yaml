@@ -5,7 +5,11 @@ serial_comm_node:
 land_vehicle_node:
   ros__parameters:
     rules:
-      - 2.00   # Threshold Distance
-      - 0.39   # Safety Distance
-      - 0.19   # Vehicle Radius
-      - 0.30   # Object Width 
+      - 4.00   # Threshold Distance
+      - 1.00   # Safety Distance
+      - 0.60   # Vehicle Radius
+      - 0.60   # Object Width 
+
+
+# 0.60
+# 1.00
