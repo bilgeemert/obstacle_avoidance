@@ -16,7 +16,7 @@ simulation_world_path = Path(land_vehicle_path, "world", "land_vehicle.sdf")
 simulation_model_path = Path(land_vehicle_path, "models")
 
 config_file = os.path.join(
-    get_package_share_directory('config_file'),
+    get_package_share_directory('obstacle_avoidance'),
     'config',
     'params.yaml'
   )
