@@ -16,6 +16,7 @@ void LandVehicle::joyCallback(const joyMsg &msg){
     twistMsg data;
     data.linear.x  = UPDATE_DATA(msg.axes[0]);
     data.angular.z = UPDATE_DATA(msg.axes[1]);
+    // std::cout << "x: " << msg.axes[0] << " z: " << msg.axes[1] << std::endl;
     pub.joy->publish(data);
 
 }

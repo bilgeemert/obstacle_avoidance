@@ -1,5 +1,14 @@
 #include "obstacle_avoidance.hpp"
 
+void updateSetpoint(float& linear_x, float& linear_w){
+if()
+}
+
+float ObstacleAvoidance::calculateDistance(float distance, int angle) {
+    return distance * abs(cosf(DEG_TO_RAD * angle)) + distance * abs(sinf(DEG_TO_RAD * angle));
+}
+
+// Update Histogram
 void ObstacleAvoidance::detectObject(pointXYZMsg& cloud_data){
     pointIndicesMsg cluster_indices;
 

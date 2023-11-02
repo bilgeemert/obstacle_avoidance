@@ -40,6 +40,9 @@ public:
     void getClusterPoint(pointIndicesMsg& , pointXYZMsg&);
     void updateHistogram(float*);
     void clearHistogram();
+    void updateSetpoint(float&, float&)
+    float calculateDistance(float, int);
+
 };
 
 #endif
