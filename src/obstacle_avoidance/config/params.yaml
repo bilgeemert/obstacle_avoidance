@@ -6,7 +6,7 @@ land_vehicle_node:
   ros__parameters:
     rules:
       - 4.00   # Threshold Distance
-      - 1.00   # Safety Distance
+      - 1.50   # Safety Distance
       - 0.60   # Vehicle Radius
       - 0.60   # Object Width 
 

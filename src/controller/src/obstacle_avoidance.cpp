@@ -1,11 +1,23 @@
 #include "obstacle_avoidance.hpp"
 
-void updateSetpoint(float& linear_x, float& linear_w){
-if()
+void ObstacleAvoidance::updateSetpoint(double & linear_x, double & linear_w){
+for(int i = -45; i < 45; i++){
+    int angle = normalizeAngle(i);
+    // for(int j = 0; j < VERTICAL; j++){
+        if(histogram[angle][92] >= rules[VEHICLE_RAD] && histogram[angle][92] <= rules[SAFETY_DIS]){
+            std::cout << "error: " << calculateDistance(histogram[angle][92], angle) << " angle: " << angle << std::endl;
+            linear_w += calculateDistance(histogram[angle][92], angle);
+        }
+    // }
+}
 }
 
+// float ObstacleAvoidance::calculateDistance(float distance, int angle) {
+//     return distance * abs(cosf(DEG_TO_RAD * angle)) + distance * abs(sinf(DEG_TO_RAD * angle));
+// }
+
 float ObstacleAvoidance::calculateDistance(float distance, int angle) {
-    return distance * abs(cosf(DEG_TO_RAD * angle)) + distance * abs(sinf(DEG_TO_RAD * angle));
+    return -sinf(DEG_TO_RAD * angle) / 2;
 }
 
 // Update Histogram
@@ -48,8 +60,8 @@ void ObstacleAvoidance::updateHistogram(float* cc_data){
         Coordinate_t spherical;
         cartesian2Spherical(cc_data, spherical.pos);
         histogram[spherical.pos[PHI]][spherical.pos[THETA]] = spherical.pos[RADIUS];
-        std::cout << "Phi: " << spherical.pos[PHI] << " Theta: " 
-                  << spherical.pos[THETA] << " Radius: " << spherical.pos[RADIUS] << std::endl;
+        // std::cout << "Phi: " << spherical.pos[PHI] << " Theta: " 
+        //           << spherical.pos[THETA] << " Radius: " << spherical.pos[RADIUS] << std::endl;
     }
 }
 
