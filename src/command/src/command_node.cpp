@@ -126,7 +126,7 @@ void Command::dataRead(){
 
 void Command::initParam(){
     this->declare_parameter<std::string>("file_name", "/dev/ttyUSB0");
-    this->declare_parameter<std::string>("control_unit", "undefined");
+    this->declare_parameter<std::string>("control_unit", "keyboard");
     device.file_name = this->get_parameter("file_name").as_string();
     control_unit = this->get_parameter("control_unit").as_string();
 }
@@ -140,26 +140,26 @@ void Command::keyboardCallback(const int32Msg msg){
 
     switch(msg.data){
       case KEYCODE_W:
-        RCLCPP_INFO(this->get_logger(), "UP");
+        RCLCPP_DEBUG(this->get_logger(), "UP");
         joy_data.axes[0] = 1.0;
         break;
       case KEYCODE_A:
-        RCLCPP_INFO(this->get_logger(), "LEFT");
+        RCLCPP_DEBUG(this->get_logger(), "LEFT");
         joy_data.axes[1] = 0.5;
         break;
       case KEYCODE_S:
-        RCLCPP_INFO(this->get_logger(), "STOP");
+        RCLCPP_DEBUG(this->get_logger(), "STOP");
         break;
       case KEYCODE_D:
-        RCLCPP_INFO(this->get_logger(), "RIGHT");
+        RCLCPP_DEBUG(this->get_logger(), "RIGHT");
         joy_data.axes[1] = -0.5;
         break;
       case KEYCODE_X:
-        RCLCPP_INFO(this->get_logger(), "DOWN");
+        RCLCPP_DEBUG(this->get_logger(), "DOWN");
         joy_data.axes[0] = -1.0;
         break;
       default:
-        RCLCPP_INFO(this->get_logger(), "None: %x", msg.data);
+        RCLCPP_DEBUG(this->get_logger(), "None: %x", msg.data);
         is_ready = false;
         break;
     }

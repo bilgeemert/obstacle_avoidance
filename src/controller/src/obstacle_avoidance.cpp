@@ -6,7 +6,7 @@ for(int i = -45; i < 45; i++){
     // for(int j = 0; j < VERTICAL; j++){
         if(histogram[angle][92] >= rules[VEHICLE_RAD] && histogram[angle][92] <= rules[SAFETY_DIS]){
             std::cout << "error: " << calculateDistance(histogram[angle][92], angle) << " angle: " << angle << std::endl;
-            linear_w += calculateDistance(histogram[angle][92], angle);
+            // linear_w += calculateDistance(histogram[angle][92], angle);
         }
     // }
 }
