@@ -24,6 +24,7 @@ private:
     std::string control_unit;
     rclcpp::TimerBase::SharedPtr timer_;  
     rclcpp::Publisher<joyMsg>::SharedPtr command_pub;
+    rclcpp::Subscription<joyMsg>::SharedPtr joy_sub;
     rclcpp::Subscription<int32Msg>::SharedPtr keyboard_sub;
 
 public:
@@ -31,6 +32,7 @@ public:
     ~Command();
     void controlSelection();
     void keyboardCallback(const int32Msg);
+    void joyCallback(const joyMsg);
     bool initPort();
     bool configure();
     void dataRead();

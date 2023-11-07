@@ -14,16 +14,21 @@ Command::Command(): Node("command_node"){
 void Command::controlSelection(){
     if(control_unit == "joy"){
         std::cout << "joy" << std::endl;
-    }else if(control_unit == "keyboard"){
+        joy_sub = this->create_subscription<joyMsg>("joy", 10,
+                        std::bind(&Command::joyCallback, this, std::placeholders::_1));
+    }
+    else if(control_unit == "keyboard"){
         std::cout << "keyboard" << std::endl;
         keyboard_sub = this->create_subscription<int32Msg>("/keypress", 10,
                 std::bind(&Command::keyboardCallback, this, std::placeholders::_1));
-    }else if(control_unit == "esp8266"){
+    }
+    else if(control_unit == "esp8266"){
         if(initPort()){
             timer_ = this->create_wall_timer(std::chrono::milliseconds(),
                                         std::bind(&Command::dataRead, this));
         }
-    }else{
+    }
+    else{
         std::cout << "control off" << std::endl;
     }
 }
@@ -162,6 +167,14 @@ void Command::keyboardCallback(const int32Msg msg){
     if(is_ready){
         command_pub->publish(joy_data);
     }
+}
+
+void Command::joyCallback(const joyMsg msg){
+    joy_data.axes[0] = msg.axes[1]; 
+    joy_data.axes[1] = msg.axes[0];
+    joy_data.buttons[0] = msg.buttons[0];
+    joy_data.buttons[1] = msg.buttons[1]; 
+    command_pub->publish(joy_data);
 }
 
 double mapValues(double data, double in_min, double in_max, double out_min, double out_max){   
