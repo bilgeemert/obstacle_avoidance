@@ -1,5 +1,6 @@
-serial_comm_node:
+control_unit_node:
   ros__parameters:
+    control_unit: "joy" # joy, esp8266, keyboard
     file_name: "/dev/ttyUSB0"
     
 land_vehicle_node:
@@ -9,8 +10,6 @@ land_vehicle_node:
       - 1.50   # Safety Distance
       - 0.60   # Vehicle Radius
       - 0.60   # Object Width 
-
-
 
 # 0.60
 # 1.00

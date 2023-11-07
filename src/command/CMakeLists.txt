@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.8)
-project(serial_comm)
+project(command)
 
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra -Wpedantic)
@@ -15,12 +15,12 @@ add_definitions(-DBAUDRATE=B9600)
 file(GLOB_RECURSE SRC_FILE src/*.cpp)
 
 include_directories(include)
-add_executable(serial_comm_node ${SRC_FILE})
-ament_target_dependencies(serial_comm_node rclcpp sensor_msgs)
+add_executable(command_node ${SRC_FILE})
+ament_target_dependencies(command_node rclcpp sensor_msgs)
 
 install(
   TARGETS 
-  serial_comm_node  
+  command_node  
   DESTINATION 
   lib/${PROJECT_NAME}
 )

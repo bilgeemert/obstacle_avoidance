@@ -11,7 +11,7 @@ from launch.actions import RegisterEventHandler, EmitEvent
 from launch.event_handlers import OnProcessExit
 from launch.events import Shutdown
 
-land_vehicle_path     = get_package_share_directory("land_vehicle")
+land_vehicle_path     = get_package_share_directory("obstacle_avoidance")
 simulation_world_path = Path(land_vehicle_path, "world", "land_vehicle.sdf")
 simulation_model_path = Path(land_vehicle_path, "models")
 
@@ -30,8 +30,8 @@ rviz = ExecuteProcess(
   )
 
 serial_node = Node(
-            package="serial_comm",                                               # ros_ign_bridge eski versiyonda kullanılır.
-            executable="serial_comm_node",
+            package="command",                                               # ros_ign_bridge eski versiyonda kullanılır.
+            executable="command_node",
             parameters=[config_file],
             output="screen"
           )
@@ -45,6 +45,15 @@ bridge_control = Node(
             output="screen"
           )
 
+bridge_keyboard = Node(
+            package="ros_gz_bridge",                                               # ros_ign_bridge eski versiyonda kullanılır.
+            executable="parameter_bridge",
+            arguments=[
+                "/keyboard/keypress@std_msgs/msg/Int32[gz.msgs.Int32"
+            ],
+            remappings=[("/keyboard/keypress","/keypress")],
+            output="screen"
+          )
 
 bridge_lidar = Node(
             package="ros_gz_bridge",
@@ -91,7 +100,8 @@ def generate_launch_description():
         simulation,
         # controller,
         # rviz,
-
+        
+        bridge_keyboard,
         bridge_control,
         bridge_lidar,
         bridge_camera,

@@ -1,7 +1,8 @@
-#ifndef __SERIAL_COMM_SERIAL_TYPE_HPP__
-#define __SERIAL_COMM_SERIAL_TYPE_HPP__
+#ifndef __COMMAND_TYPE_HPP__
+#define __COMMAND_TYPE_HPP__
 
-#include <cstring>
+#include <string>
+#include <cstdint>
 
 #define HEADER_     27
 #define FOOTHER_    71
@@ -9,8 +10,10 @@
 #define FOOTHER_LEN 1
 #define PAYLOAD_LEN 4
 
-typedef enum {HEADER, JOY_X, JOY_Y, OBS_FLAG, 
-                ARM_FLAG, FOOTHER, ALL_DATA} data_t;
+typedef enum {
+    HEADER, JOY_X, JOY_Y, OBS_FLAG, 
+    ARM_FLAG, FOOTHER, ALL_DATA
+} data_t;
 
 typedef struct{
     std::string file_name;
@@ -25,5 +28,7 @@ typedef struct{
     uint8_t prev_byte;
     uint8_t buffer[ALL_DATA];
 } rx_t;
+
+double mapValues(double, double, double, double, double);
 
 #endif
