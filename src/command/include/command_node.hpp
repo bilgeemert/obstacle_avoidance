@@ -10,21 +10,27 @@
 
 #include "rclcpp/rclcpp.hpp"
 #include "sensor_msgs/msg/joy.hpp"
+#include "std_msgs/msg/int32.hpp"
 #include "command_type.hpp"
 
 using joyMsg = sensor_msgs::msg::Joy;
+using int32Msg = std_msgs::msg::Int32;
 
 class Command: public rclcpp::Node{
 private:
     rx_t data;
-    joyMsg msg;
+    joyMsg joy_data;
     device_t device;
+    std::string control_unit;
     rclcpp::TimerBase::SharedPtr timer_;  
-    rclcpp::Publisher<joyMsg>::SharedPtr joy_pub;
+    rclcpp::Publisher<joyMsg>::SharedPtr command_pub;
+    rclcpp::Subscription<int32Msg>::SharedPtr keyboard_sub;
 
 public:
     Command();
     ~Command();
+    void controlSelection();
+    void keyboardCallback(const int32Msg);
     bool initPort();
     bool configure();
     void dataRead();

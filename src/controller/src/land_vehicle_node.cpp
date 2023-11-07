@@ -4,7 +4,7 @@ using namespace std::placeholders;
 
 LandVehicle::LandVehicle() : Node("land_vehicle_node"){
     declareParameters();
-    sub.joy = this->create_subscription<joyMsg>("joy", 10, std::bind(
+    sub.joy = this->create_subscription<joyMsg>("command_data", 10, std::bind(
                                 &LandVehicle::joyCallback, this, _1));
     sub.cloud = this->create_subscription<pointCloudMsg>("/lidar", 100, std::bind(
                                 &LandVehicle::pointCloudCallback, this, _1));
@@ -17,7 +17,7 @@ void LandVehicle::joyCallback(const joyMsg &msg){
     data.linear.x  = UPDATE_DATA(msg.axes[0]);
     data.angular.z = UPDATE_DATA(msg.axes[1]);
     updateSetpoint(data.linear.x, data.angular.z);
-    // std::cout << "x: " << msg.axes[0] << " z: " << msg.axes[1] << std::endl;
+    std::cout << "x: " << msg.axes[0] << " z: " << msg.axes[1] << std::endl;
     pub.joy->publish(data);
 
 }

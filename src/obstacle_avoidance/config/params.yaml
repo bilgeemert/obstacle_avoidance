@@ -1,6 +1,6 @@
-control_unit_node:
+command_node:
   ros__parameters:
-    control_unit: "joy" # joy, esp8266, keyboard
+    control_unit: "keyboard" # joy, esp8266, keyboard
     file_name: "/dev/ttyUSB0"
     
 land_vehicle_node:

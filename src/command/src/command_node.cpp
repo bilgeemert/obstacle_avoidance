@@ -2,16 +2,29 @@
 
 Command::Command(): Node("command_node"){
     initParam();
+    controlSelection();
     
+    command_pub = this->create_publisher<joyMsg>("command_data", 10);
+        
     memset(data.buffer, 0, sizeof(data.buffer));
-    msg.axes.resize(2);
-    msg.buttons.resize(2);
+    joy_data.axes.resize(2);
+    joy_data.buttons.resize(2);
+}
 
-    joy_pub = this->create_publisher<joyMsg>("command_data", 10);
-
-    if(initPort()){
-        timer_ = this->create_wall_timer(std::chrono::milliseconds(),
+void Command::controlSelection(){
+    if(control_unit == "joy"){
+        std::cout << "joy" << std::endl;
+    }else if(control_unit == "keyboard"){
+        std::cout << "keyboard" << std::endl;
+        keyboard_sub = this->create_subscription<int32Msg>("/keypress", 10,
+                std::bind(&Command::keyboardCallback, this, std::placeholders::_1));
+    }else if(control_unit == "esp8266"){
+        if(initPort()){
+            timer_ = this->create_wall_timer(std::chrono::milliseconds(),
                                         std::bind(&Command::dataRead, this));
+        }
+    }else{
+        std::cout << "control off" << std::endl;
     }
 }
 
@@ -91,11 +104,11 @@ void Command::dataRead(){
             data.state = 0;
             data.prev_byte = data.curr_byte;
             if(data.curr_byte == FOOTHER_){
-                msg.axes[0]    = mapValues(static_cast<float>(data.buffer[JOY_Y]), 0, 200, -1, 1);
-                msg.axes[1]    = mapValues(static_cast<float>(data.buffer[JOY_X]), 0, 200, 1, -1);
-                msg.buttons[1] = static_cast<int>(data.buffer[OBS_FLAG]);
-                msg.buttons[0] = static_cast<int>(data.buffer[ARM_FLAG]);
-                joy_pub->publish(msg);
+                joy_data.axes[0]    = mapValues(static_cast<float>(data.buffer[JOY_Y]), 0, 200, -1, 1);
+                joy_data.axes[1]    = mapValues(static_cast<float>(data.buffer[JOY_X]), 0, 200, 1, -1);
+                joy_data.buttons[1] = static_cast<int>(data.buffer[OBS_FLAG]);
+                joy_data.buttons[0] = static_cast<int>(data.buffer[ARM_FLAG]);
+                command_pub->publish(joy_data);
             }else{
                 data.state = 0;
             }
@@ -108,7 +121,47 @@ void Command::dataRead(){
 
 void Command::initParam(){
     this->declare_parameter<std::string>("file_name", "/dev/ttyUSB0");
+    this->declare_parameter<std::string>("control_unit", "undefined");
     device.file_name = this->get_parameter("file_name").as_string();
+    control_unit = this->get_parameter("control_unit").as_string();
+}
+
+void Command::keyboardCallback(const int32Msg msg){
+    bool is_ready = true;
+    joy_data.axes[0] = 0.0;
+    joy_data.axes[1] = 0.0;
+    joy_data.buttons[0] = 0;
+    joy_data.buttons[1] = 0;
+
+    switch(msg.data){
+      case KEYCODE_W:
+        RCLCPP_INFO(this->get_logger(), "UP");
+        joy_data.axes[0] = 1.0;
+        break;
+      case KEYCODE_A:
+        RCLCPP_INFO(this->get_logger(), "LEFT");
+        joy_data.axes[1] = 0.5;
+        break;
+      case KEYCODE_S:
+        RCLCPP_INFO(this->get_logger(), "STOP");
+        break;
+      case KEYCODE_D:
+        RCLCPP_INFO(this->get_logger(), "RIGHT");
+        joy_data.axes[1] = -0.5;
+        break;
+      case KEYCODE_X:
+        RCLCPP_INFO(this->get_logger(), "DOWN");
+        joy_data.axes[0] = -1.0;
+        break;
+      default:
+        RCLCPP_INFO(this->get_logger(), "None: %x", msg.data);
+        is_ready = false;
+        break;
+    }
+
+    if(is_ready){
+        command_pub->publish(joy_data);
+    }
 }
 
 double mapValues(double data, double in_min, double in_max, double out_min, double out_max){   

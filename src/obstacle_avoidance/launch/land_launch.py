@@ -98,14 +98,14 @@ def generate_launch_description():
     return LaunchDescription([
         serial_node,
         simulation,
-        # controller,
+        controller,
         # rviz,
         
         bridge_keyboard,
         bridge_control,
         bridge_lidar,
-        bridge_camera,
-        bridge_imu,
+        # bridge_camera,
+        # bridge_imu,
 
         shutdown
     ]) 

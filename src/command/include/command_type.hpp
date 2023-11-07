@@ -10,6 +10,12 @@
 #define FOOTHER_LEN 1
 #define PAYLOAD_LEN 4
 
+#define KEYCODE_W 87 
+#define KEYCODE_A 65
+#define KEYCODE_S 83
+#define KEYCODE_D 68
+#define KEYCODE_X 88
+
 typedef enum {
     HEADER, JOY_X, JOY_Y, OBS_FLAG, 
     ARM_FLAG, FOOTHER, ALL_DATA
