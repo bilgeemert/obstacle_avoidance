@@ -236,7 +236,7 @@
                 <direction>0 0 -1</direction>
                 <cast_shadows>1</cast_shadows>
             </light>
-            <sensor name="imu_sensor" type="imu">
+            <!-- <sensor name="imu_sensor" type="imu">
                 <always_on>1</always_on>
                 <update_rate>500</update_rate>
                 <topic>imu</topic>
@@ -314,7 +314,7 @@
                     </linear_acceleration>
                 </imu>
 
-            </sensor>
+            </sensor> -->
             <visual name="camera_visual">
                 <pose>0.43 0 0.26 0 0 0</pose>
                 <geometry>
@@ -359,7 +359,7 @@
                 <lidar>
                     <scan>
                         <horizontal>
-                            <samples>120</samples>
+                            <samples>180</samples>
                             <resolution>1</resolution>
                             <min_angle>-3.14159</min_angle>
                             <max_angle>3.14159</max_angle>
@@ -367,13 +367,13 @@
                         <vertical>
                             <samples>4</samples>
                             <resolution>1</resolution>
-                            <min_angle>-0.1</min_angle>
-                            <max_angle>0.1</max_angle>
+                            <min_angle>0.2</min_angle>
+                            <max_angle>-0.2</max_angle>
                         </vertical>
                     </scan>
                     <range>
                         <min>0.01</min>
-                        <max>4</max>
+                        <max>6</max>
                         <resolution>0.01</resolution>
                     </range>
                     <noise>

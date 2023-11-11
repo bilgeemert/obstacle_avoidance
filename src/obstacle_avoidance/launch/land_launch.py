@@ -94,11 +94,19 @@ shutdown = RegisterEventHandler(
             )
           )
 
+joy_node = Node(
+            package="joy",                                               # ros_ign_bridge eski versiyonda kullanılır.
+            executable="joy_node",
+            parameters=[config_file],
+            output="screen"
+          )
+
 def generate_launch_description():
     return LaunchDescription([
         serial_node,
         simulation,
-        controller,
+        joy_node,
+        # controller,
         # rviz,
         
         bridge_keyboard,

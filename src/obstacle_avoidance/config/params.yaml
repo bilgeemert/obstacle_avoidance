@@ -1,13 +1,13 @@
 command_node:
   ros__parameters:
-    control_unit: "keyboard" # joy, esp8266, keyboard
+    control_unit: "joy" # joy, esp8266, keyboard
     file_name: "/dev/ttyUSB0"
     
 land_vehicle_node:
   ros__parameters:
     rules:
-      - 2.00   # Threshold Distance
-      - 1.50   # Safety Distance
+      - 5.00   # Threshold Distance
+      - 3.00   # Safety Distance
       - 0.60   # Vehicle Radius
       - 0.60   # Object Width 
 

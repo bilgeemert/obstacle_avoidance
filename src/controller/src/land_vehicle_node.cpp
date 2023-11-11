@@ -4,22 +4,18 @@ using namespace std::placeholders;
 
 LandVehicle::LandVehicle() : Node("land_vehicle_node"){
     declareParameters();
-    sub.joy = this->create_subscription<joyMsg>("command_data", 10, std::bind(
-                                &LandVehicle::joyCallback, this, _1));
-    sub.cloud = this->create_subscription<pointCloudMsg>("/lidar", 100, std::bind(
-                                &LandVehicle::pointCloudCallback, this, _1));
-
-    pub.joy = this->create_publisher<twistMsg>("cmd_vel", 10);
+    initTopic();
 }
 
 void LandVehicle::joyCallback(const joyMsg &msg){
-    twistMsg data;
     data.linear.x  = UPDATE_DATA(msg.axes[0]);
     data.angular.z = UPDATE_DATA(msg.axes[1]);
-    updateSetpoint(data.linear.x, data.angular.z);
-    std::cout << "x: " << msg.axes[0] << " z: " << msg.axes[1] << std::endl;
-    pub.joy->publish(data);
+    obstacleAvoidance();
+}
 
+void LandVehicle::obstacleAvoidance(){
+    updateSetpoint(data.linear.x, data.angular.z);
+    pub.joy->publish(data);
 }
 
 void LandVehicle::pointCloudCallback(const pointCloudMsg &msg){
@@ -41,14 +37,18 @@ void LandVehicle::declareParameters(){
     rules = this->get_parameter("rules").as_double_array();
 }
 
+void LandVehicle::initTopic(){
+    sub.joy = this->create_subscription<joyMsg>("command_data", 10, std::bind(
+                                &LandVehicle::joyCallback, this, _1));
+    sub.cloud = this->create_subscription<pointCloudMsg>("/lidar", 100, std::bind(
+                                &LandVehicle::pointCloudCallback, this, _1));
+
+    pub.joy = this->create_publisher<twistMsg>("cmd_vel", 10);
+}
+
 int main(int argc, char* argv[]){
     rclcpp::init(argc, argv);
     rclcpp::spin(std::make_shared<LandVehicle>());
     rclcpp::shutdown();
     return 0;
 }
-
-/*
-* Linear Velocity X
-* Angular Velocity W
-*/

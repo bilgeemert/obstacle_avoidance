@@ -28,12 +28,16 @@ private:
     pub_t pub;
     sub_t sub;
     pcl_t pcl_data;
+    twistMsg data;
+    rclcpp::TimerBase::SharedPtr obs_timer;
 
 public:
     LandVehicle();
     void joyCallback(const joyMsg &);
+    void obstacleAvoidance();
     void pointCloudCallback(const pointCloudMsg &);
     void declareParameters();
+    void initTopic();
 };
 
 #endif
