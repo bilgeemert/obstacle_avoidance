@@ -121,42 +121,6 @@
             <uri>land_vehicle/model.sdf</uri> 
         </include>
 
-
-        <actor name="actor_walking">
-            <skin>
-                <filename>https://fuel.gazebosim.org/1.0/Mingfei/models/actor/tip/files/meshes/walk.dae</filename>
-                <scale>1.0</scale>
-            </skin>
-            <script>
-              <loop>true</loop>
-              <delay_start>0.000000</delay_start>
-              <auto_start>true</auto_start>
-              <trajectory id="0" type="walk" tension="0.6">
-                <waypoint>
-                    <time>0</time>
-                    <pose>0 -2.0 1.0 0 0 0</pose>
-                </waypoint>
-                <waypoint>
-                    <time>10</time>
-                    <pose>8.0 -2.0 1.0 0 0 0</pose>
-                </waypoint>
-                <waypoint>
-                    <time>11</time>
-                    <pose>8.0 -2.0 1.0 0 0 3.14</pose>
-                </waypoint>
-                <waypoint>
-                    <time>21</time>
-                    <pose>0 -2.0 1.0 0 0 3.14</pose>
-                </waypoint>
-                <waypoint>
-                  <time>22</time>
-                  <pose>0.0 -2.0 1.0 0 0 0</pose>
-                </waypoint>
-              </trajectory>
-            </script>
-            <pose>5 -3 0 0 0 1.57</pose>
-          </actor>
-
         <light name='sun' type='directional'>
             <visualize>false</visualize>
             <cast_shadows>true</cast_shadows>
