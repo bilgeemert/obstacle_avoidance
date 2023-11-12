@@ -30,14 +30,14 @@ rviz = ExecuteProcess(
   )
 
 serial_node = Node(
-            package="command",                                               # ros_ign_bridge eski versiyonda kullanılır.
+            package="command",                                               
             executable="command_node",
             parameters=[config_file],
             output="screen"
           )
 
 bridge_control = Node(
-            package="ros_gz_bridge",                                               # ros_ign_bridge eski versiyonda kullanılır.
+            package="ros_gz_bridge",                                               
             executable="parameter_bridge",
             arguments=[
                 "/cmd_vel@geometry_msgs/msg/Twist]gz.msgs.Twist"
@@ -46,7 +46,7 @@ bridge_control = Node(
           )
 
 bridge_keyboard = Node(
-            package="ros_gz_bridge",                                               # ros_ign_bridge eski versiyonda kullanılır.
+            package="ros_gz_bridge",                                               
             executable="parameter_bridge",
             arguments=[
                 "/keyboard/keypress@std_msgs/msg/Int32[gz.msgs.Int32"
@@ -59,7 +59,6 @@ bridge_lidar = Node(
             package="ros_gz_bridge",
             executable="parameter_bridge",
             arguments=[
-                # "/lidar@sensor_msgs/msg/LaserScan[gz.msgs.LaserScan"  # Sadece bir ekseni veriyor
                 "/lidar/points@sensor_msgs/msg/PointCloud2[gz.msgs.PointCloudPacked"
             ],
             remappings=[("/lidar/points","/lidar")],
@@ -82,7 +81,7 @@ bridge_imu = Node(
           )
 
 controller = Node(
-            package="controller",                                               # ros_ign_bridge eski versiyonda kullanılır.
+            package="controller",                                               
             executable="controller_node",
             output="screen"
           )
@@ -112,7 +111,7 @@ def generate_launch_description():
         bridge_keyboard,
         bridge_control,
         bridge_lidar,
-        # bridge_camera,
+        bridge_camera,
         # bridge_imu,
 
         shutdown

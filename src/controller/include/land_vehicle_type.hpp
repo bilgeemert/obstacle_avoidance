@@ -4,12 +4,19 @@
 #include <cmath>
 
 #define OFSET 0.1f
-#define MAX_DISTANCE (6.0f)
+
+#define VEHICLE_RADIUS (0.6f)
+#define MAX_DISTANCE (3.5f)
 #define MIN_DISTANCE (0.0f)
 
 #define F2P(x) (1000/x)
-#define DEG_TO_RAD (M_PI/180.0f)
-#define RAD_TO_DEG (180.0f/M_PI)
+#define DEG2RAD (M_PI/180.0f)
+#define RAD2DEG (180.0f/M_PI)
+
+#define VERTICAL   181 
+#define HORIZONTAL 360
+#define ERROR (-1)
+#define OK    (1)
 
 #define CAL_YAW(X) (X < 0 ? 0.1 : -0.1)
 #define UPDATE_DATA(x) (abs(x) > OFSET ? x : 0.0f) 

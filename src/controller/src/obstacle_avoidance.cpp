@@ -4,17 +4,28 @@ void ObstacleAvoidance::updateSetpoint(double & linear_x, double & linear_w){
     for(int i = -30; i < 30; i++){
         for(int j = 70; j < 110; j++){
             int angle = normalizeAngle(i);
+
             if((histogram[angle][j] >= rules[VEHICLE_RAD]) && (histogram[angle][j] <= rules[SAFETY_DIS])){
                 std::cout << "distance: " << histogram[angle][j] << " error: " 
                      << calculateDistance(histogram[angle][j], angle) << " angle: " << angle << std::endl;
-                linear_w += CAL_YAW(i) * 0.1;
+                linear_w += CAL_YAW(i) * 0.5;
             }
         }
     }
 }
 
+// void ObstacleAvoidance::updateSetpoint(){
+//     for(int i = 0; i < VERTICAL; i++){
+//         for(int j = 0; j < HORIZONTAL; j++){
+//             if(histogram[j][i] < ){
+
+//             }
+//         }
+//     }
+// }
+
 float ObstacleAvoidance::calculateDistance(float distance, int angle) {
-    return cos(DEG_TO_RAD * angle);
+    return abs(cos(DEG2RAD * angle)) + abs(sin(DEG2RAD * angle));
 }
 
 void ObstacleAvoidance::detectObject(pointXYZMsg& cloud_data){

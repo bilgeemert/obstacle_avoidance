@@ -15,11 +15,6 @@
 #include "land_vehicle_type.hpp"
 #include "geometry_utils.hpp"
 
-#define VERTICAL   181 
-#define HORIZONTAL 360
-#define ERROR (-1)
-#define OK    (1)
-
 typedef struct {
     pcl::PCLPointCloud2 merged;
 	pcl::PointCloud<pcl::PointXYZ> cloud;
@@ -42,7 +37,6 @@ public:
     void clearHistogram();
     void updateSetpoint(double &, double &);
     float calculateDistance(float, int);
-
 };
 
 #endif
