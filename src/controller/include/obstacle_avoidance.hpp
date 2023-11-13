@@ -37,6 +37,7 @@ public:
     void clearHistogram();
     void updateSetpoint(double &, double &);
     float calculateDistance(float, int);
+    float avoidanceDistance(float, int);
 };
 
 #endif

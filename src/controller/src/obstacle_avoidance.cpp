@@ -1,31 +1,49 @@
 #include "obstacle_avoidance.hpp"
 
-void ObstacleAvoidance::updateSetpoint(double & linear_x, double & linear_w){
-    for(int i = -30; i < 30; i++){
-        for(int j = 70; j < 110; j++){
-            int angle = normalizeAngle(i);
+// void ObstacleAvoidance::updateSetpoint(double & linear_x, double & linear_w){
+//     for(int i = -30; i < 30; i++){
+//         for(int j = 70; j < 110; j++){
+//             int angle = normalizeAngle(i);
 
-            if((histogram[angle][j] >= rules[VEHICLE_RAD]) && (histogram[angle][j] <= rules[SAFETY_DIS])){
-                std::cout << "distance: " << histogram[angle][j] << " error: " 
-                     << calculateDistance(histogram[angle][j], angle) << " angle: " << angle << std::endl;
-                linear_w += CAL_YAW(i) * 0.5;
-            }
-        }
-    }
-}
-
-// void ObstacleAvoidance::updateSetpoint(){
-//     for(int i = 0; i < VERTICAL; i++){
-//         for(int j = 0; j < HORIZONTAL; j++){
-//             if(histogram[j][i] < ){
-
+//             if((histogram[angle][j] >= rules[VEHICLE_RAD]) && (histogram[angle][j] <= rules[SAFETY_DIS])){
+//                 std::cout << "distance: " << histogram[angle][j] << " error: " 
+//                      << calculateDistance(histogram[angle][j], angle) << " angle: " << angle << std::endl;
+//                 linear_w += CAL_YAW(i) * 0.5;
 //             }
 //         }
 //     }
 // }
 
+void ObstacleAvoidance::updateSetpoint(double & linear_x, double & linear_w){
+    float error = 0.0f;
+    bool is_change = false;
+    for(int theta = 0; theta < VERTICAL; theta++){
+        for(int phi = 0; phi < HORIZONTAL; phi++){
+            if(histogram[phi][theta] < calculateDistance(VEHICLE_RADIUS, phi)){  
+                continue;
+            }else if((histogram[phi][theta] < 1.0) && (phi % 90 != 0)){
+
+                // std::cout << "phi: " << phi << " theta: " << theta
+                // << " distance: " << histogram[phi][theta] 
+                // << " error: " << calculateDistance(VEHICLE_RADIUS, phi) << std::endl;
+                // linear_w += calculateDistance(histogram[phi][theta], phi);
+                // std::cout << "force: " << calculateDistance(histogram[phi][theta], phi)
+                    //  << " linear w: " << linear_w << std::endl;
+                error += avoidanceDistance(histogram[phi][theta], phi);
+            }
+        }
+    }
+    std::cout << " ERROR: " << error << std::endl;
+}
+
 float ObstacleAvoidance::calculateDistance(float distance, int angle) {
-    return abs(cos(DEG2RAD * angle)) + abs(sin(DEG2RAD * angle));
+    return distance * (abs(cos(DEG2RAD * angle)) + abs(sin(DEG2RAD * angle)));
+}
+
+float ObstacleAvoidance::avoidanceDistance(float distance, int angle){
+    float kForce = 0.01f;
+    std::cout << " angle: " << angle << std::endl;
+    return kForce * cosf(DEG2RAD * angle)/ (sinf(DEG2RAD * angle) * distance);
 }
 
 void ObstacleAvoidance::detectObject(pointXYZMsg& cloud_data){

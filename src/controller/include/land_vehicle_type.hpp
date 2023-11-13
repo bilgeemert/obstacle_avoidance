@@ -5,7 +5,8 @@
 
 #define OFSET 0.1f
 
-#define VEHICLE_RADIUS (0.6f)
+#define VEHICLE_RADIUS (0.33f)
+#define SAFETY_VEHICLE ()
 #define MAX_DISTANCE (3.5f)
 #define MIN_DISTANCE (0.0f)
 
@@ -20,6 +21,7 @@
 
 #define CAL_YAW(X) (X < 0 ? 0.1 : -0.1)
 #define UPDATE_DATA(x) (abs(x) > OFSET ? x : 0.0f) 
+#define CAL_FORCE(X) (cosf(DEG2RAD * X) * cosf(DEG2RAD * X))
 
 typedef enum { X, Y, Z, ALL_CC } cc_mode_t;
 typedef enum { RADIUS, THETA, PHI, ALL_SC } sc_mode_t;

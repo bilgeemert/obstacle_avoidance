@@ -344,7 +344,7 @@
             </sensor>
          
             <visual name="laser_visual">
-                <pose>0.08 0 0.3 0 0 0</pose>
+                <pose>0.0 0 0.3 0 0 0</pose>
                 <geometry>
                     <cylinder>
                         <radius>0.03</radius>
@@ -353,7 +353,7 @@
                 </geometry>
             </visual>
             <sensor name="front_laser" type="gpu_ray">
-                <pose>0.08 0 0.394 0 0 0</pose>
+                <pose>0.0 0 0.394 0 0 0</pose>
                 <update_rate>5</update_rate>
                 <topic>lidar</topic>
                 <lidar>
