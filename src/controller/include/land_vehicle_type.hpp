@@ -21,7 +21,7 @@
 
 #define CAL_YAW(X) (X < 0 ? 0.1 : -0.1)
 #define UPDATE_DATA(x) (abs(x) > OFSET ? x : 0.0f) 
-#define CAL_FORCE(X) (cosf(DEG2RAD * X) * cosf(DEG2RAD * X))
+#define CAL_FORCE(X) abs(std::pow((cosf(DEG2RAD * X)), 3))
 
 typedef enum { X, Y, Z, ALL_CC } cc_mode_t;
 typedef enum { RADIUS, THETA, PHI, ALL_SC } sc_mode_t;
