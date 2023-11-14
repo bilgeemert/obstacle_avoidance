@@ -12,7 +12,8 @@ from launch.event_handlers import OnProcessExit
 from launch.events import Shutdown
 
 land_vehicle_path     = get_package_share_directory("obstacle_avoidance")
-simulation_world_path = Path(land_vehicle_path, "world", "land_vehicle.sdf")
+# simulation_world_path = Path(land_vehicle_path, "world", "land_vehicle.sdf") land_tunnel.sdf
+simulation_world_path = Path(land_vehicle_path, "world", "land_tunnel.sdf") 
 simulation_model_path = Path(land_vehicle_path, "models")
 
 config_file = os.path.join(
