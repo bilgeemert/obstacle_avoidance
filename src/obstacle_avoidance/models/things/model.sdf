@@ -1,0 +1,123 @@
+<?xml version='1.0' encoding='utf-8'?>
+<sdf version="1.6">
+  <model name="things">
+    <include>
+        <name>wall_1</name>
+        <pose>0 20.5 0.20 0 0 1.57</pose>
+        <uri>https://fuel.gazebosim.org/1.0/makerspet/models/room_wall_2x5m</uri>
+      </include>
+    
+      <include>
+        <name>table_1</name>
+        <pose>-1.8 18 0.5 -1.57 0 0</pose>
+        <uri> https://fuel.gazebosim.org/1.0/OpenRobotics/models/Table</uri>
+      </include>
+      <include>
+        <name>table_2</name>
+        <pose>-0.3 18 0.5 -1.57 0 0</pose>
+        <uri> https://fuel.gazebosim.org/1.0/OpenRobotics/models/Table</uri>
+      </include>
+      <include>
+        <name>table_3</name>
+        <pose>0 17.5 0.5 -1.57 0 -2</pose>
+        <uri> https://fuel.gazebosim.org/1.0/OpenRobotics/models/Table</uri>
+      </include>
+      <include>
+        <name>table_4</name>
+        <pose>-1 16.6 0.5 -1.57 0 -2.7</pose>
+        <uri> https://fuel.gazebosim.org/1.0/OpenRobotics/models/Table</uri>
+      </include>
+      <include>
+        <name>table_5</name>
+        <pose>2.8 19.6 0.5 -1.57 0 2</pose>
+        <uri> https://fuel.gazebosim.org/1.0/OpenRobotics/models/Table</uri>
+      </include>
+      <include>
+        <name>table_6</name>
+        <pose>3.27 17.84 0.5 -1.57 0 1.71</pose>
+        <uri> https://fuel.gazebosim.org/1.0/OpenRobotics/models/Table</uri>
+      </include>
+      <include>
+        <name>table_7</name>
+        <pose>3.24 16.01 0.5 -1.57 0 1.38</pose>
+        <uri> https://fuel.gazebosim.org/1.0/OpenRobotics/models/Table</uri>
+      </include>
+      <include>
+        <name>table_8</name>
+        <pose>2.09 14.31 0.5 -1.57 0 0.8</pose>
+        <uri> https://fuel.gazebosim.org/1.0/OpenRobotics/models/Table</uri>
+      </include>
+      <include>
+        <name>table_9</name>
+        <pose>0.86 13.18 0.5 -1.57 0 0.65</pose>
+        <uri> https://fuel.gazebosim.org/1.0/OpenRobotics/models/Table</uri>
+      </include>
+       <include>
+        <name>table_10</name>
+        <pose>-1.29 12.64 0.5 -1.57 0 -0.1</pose>
+        <uri> https://fuel.gazebosim.org/1.0/OpenRobotics/models/Table</uri>
+      </include>
+    
+      <include>
+        <name>LitterBin_1</name>
+        <pose>-0.5 14.7 0 0 0 0.2</pose>
+        <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/LitterBin</uri>
+      </include>
+      <include>
+        <name>LitterBin_2</name>
+        <pose>1.4 20.09 0 0 0 0.2</pose>
+        <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/LitterBin</uri>
+      </include>
+      <include>
+        <name>LitterBin_3</name>
+        <pose>0.3 16.4 0 0 0 0</pose>
+        <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/LitterBin</uri>
+      </include>
+      
+      <include>
+        <name>box_1</name>
+        <pose>-1.21 20.2 0.2 0 0 1.57</pose>
+        <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Cardboard box</uri>
+      </include>
+      <include>
+        <name>box_2</name>
+        <pose>-1.21 20.2 0.5 0 0 1.57</pose>
+        <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Cardboard box</uri>
+      </include>
+      <include>
+        <name>box_3</name>
+        <pose>-1.21 20.2 0.8 0 0 1.57</pose>
+        <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Cardboard box</uri>
+      </include>
+    
+      <include>
+        <name>box_4</name>
+        <pose>-0.14 19.2 0.2 0 0 0</pose>
+        <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Cardboard box</uri>
+      </include>
+      <include>
+        <name>box_5</name>
+        <pose>-0.14 19.2 0.5 0 0 0</pose>
+        <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Cardboard box</uri>
+      </include>
+      <include>
+        <name>box_6</name>
+        <pose>-0.14 19.2 0.8 0 0 0</pose>
+        <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Cardboard box</uri>
+      </include>
+      
+      <include>
+        <name>mobile_1</name>
+        <pose>0.69 18.32 0 0 0 -1.17</pose>
+        <uri> https://fuel.gazebosim.org/1.0/NGD1004/models/pallet_box_mobile</uri>
+      </include>
+    
+      <include>
+        <name>Valve_wall</name>
+        <pose>1.38 16.25 1.33 2.96 1.53 2.14</pose>
+        <uri> https://fuel.gazebosim.org/1.0/OpenRobotics/models/DRC Practive: Valve wall</uri>
+      </include>
+    
+
+    </model>
+</sdf>
