@@ -11,17 +11,21 @@ void Command::controlSelection(){
     if(control_unit == "joy"){
         joy_sub = this->create_subscription<joyMsg>("joy", 10,
                         std::bind(&Command::joyCallback, this, std::placeholders::_1));
+
     } else if(control_unit == "keyboard"){ 
         keyboard_sub = this->create_subscription<int32Msg>("/keypress", 10,
                 std::bind(&Command::keyboardCallback, this, std::placeholders::_1));
+
     } else if(control_unit == "esp8266"){
         if(initPort()){
             timer_ = this->create_wall_timer(std::chrono::milliseconds(),
-                                        std::bind(&Command::dataRead, this));
+                                        std::bind(&Command::dataRead, this));                          
         }
+
     } else{
         std::cout << "control off" << std::endl;
     }
+
     command_pub = this->create_publisher<joyMsg>("command_data", 10);
 }
 
@@ -31,15 +35,16 @@ Command::~Command(){
 
 bool Command::initPort(){
     device.port = open(device.file_name.c_str(), O_RDWR);
-    std::cout << device.file_name.c_str() << std::endl;
     if(device.port < 0){
         std::cout << "Error " << errno << " from open : " << strerror(errno) << std::endl;
         return false;
     }
+
     if(!configure()){
         std::cout << "Error configure..." << std::endl;
         return false;
     }
+    
     usleep(1000000);
     return true;
 }
