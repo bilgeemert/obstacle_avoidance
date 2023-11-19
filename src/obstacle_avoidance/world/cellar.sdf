@@ -33,7 +33,6 @@
                 <camera_pose>0 -16 2 0 0.5 1.57</camera_pose>
                 <!-- <horizontal_fov>42,97</horizontal_fov> -->
             </plugin>
-               <!-- World control -->
             <plugin filename="WorldControl" name="World control">
                 <gz-gui>
                 <title>World control</title>
@@ -53,11 +52,8 @@
                 <start_paused>true</start_paused>
                 <use_event>false</use_event>
                 <start_paused>true</start_paused>
-                <!-- <service>/world/world_demo/control</service>
-                <stats_topic>/world/world_demo/stats</stats_topic> -->
             </plugin>
 
-            <!-- World statistics -->
             <plugin filename="WorldStats" name="World stats">
                 <gz-gui>
                 <title>World stats</title>
@@ -76,7 +72,7 @@
                 <real_time>false</real_time>
                 <real_time_factor>true</real_time_factor>
                 <iterations>true</iterations>
-            </plugin>
+            </plugin> 
 
             <plugin filename="ImageDisplay" name="Image Display">
                 <gz-gui>
@@ -93,7 +89,7 @@
               </gz-gui>
             </plugin>
 
-              <plugin filename="KeyPublisher" name="Key publisher">
+              <!-- <plugin filename="KeyPublisher" name="Key publisher">
                 <gz-gui>
                   <anchors target="3D View">
                     <line own="right" target="right"/>
@@ -105,7 +101,7 @@
                   <property key="state" type="string">floating</property>
                   <property key="showTitleBar" type="bool">false</property>
                 </gz-gui>
-              </plugin>
+              </plugin> -->
         </gui>
 
         <include>
@@ -113,7 +109,6 @@
         </include>
 
         <include>
-            <pose>0 0 0.5 0 0 0</pose>
             <uri>obstacle/model.sdf</uri> 
         </include>
 

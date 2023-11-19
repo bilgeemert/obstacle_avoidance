@@ -15,7 +15,6 @@ using twistMsg = geometry_msgs::msg::Twist;
 using pointCloudMsg   = sensor_msgs::msg::PointCloud2;
 using markerArrayMsg  = visualization_msgs::msg::MarkerArray;
 
-
 typedef struct{
     rclcpp::Subscription<joyMsg>::SharedPtr joy;
     rclcpp::Subscription<pointCloudMsg>::SharedPtr cloud;

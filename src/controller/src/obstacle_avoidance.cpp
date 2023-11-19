@@ -8,7 +8,9 @@ void ObstacleAvoidance::updateSetpoint(double & linear_x, double & linear_w){
             if(histogram[(phi % 20)][theta] < 0.80f ){
                 linear_x = 0.0;
                 std::cout << "STOP" << std::endl;
-                linear_w = -0.5;
+                int left_force = histogram[89][theta] + histogram[90][theta] + histogram[91][theta];
+                int right_force = histogram[269][theta] + histogram[270][theta] + histogram[271][theta];
+                linear_w = left_force > right_force ?  0.5 : -0.5;
             }
             if(histogram[phi][theta] < calculateDistance(VEHICLE_RADIUS, phi)){  
                 continue;
