@@ -113,7 +113,7 @@
         </include>
 
         <include>
-            <pose>0 -14 0.15 0 0 1.57</pose>
+            <pose>-0.25 -14 0.15 0 0 1.57</pose>
             <uri>land_vehicle/model.sdf</uri> 
         </include>
 

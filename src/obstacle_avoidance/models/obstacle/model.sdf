@@ -3,9 +3,14 @@
   <model name="obstacle">
     <include>
       <name>TrolleyBox2</name>
-      <pose>8 5 0 0 0 1.57</pose>
+      <pose>8 5.2 0 0 0 1.57</pose>
       <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/TrolleyBox2</uri>
     </include>
+    <include>
+        <name>TrolleyBox2_1</name>
+        <pose>8 4.4 0 0 0 0</pose>
+        <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/TrolleyBox2</uri>
+      </include>
     
   <include> <name>ClutteringC_1</name>
       <pose>-4 -5 0 0 0 0</pose>
