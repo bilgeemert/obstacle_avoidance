@@ -1,24 +1,15 @@
 #include "obstacle_avoidance.hpp"
 
-// void ObstacleAvoidance::updateSetpoint(double & linear_x, double & linear_w){
-//     for(int i = -30; i < 30; i++){
-//         for(int j = 70; j < 110; j++){
-//             int angle = normalizeAngle(i);
-
-//             if((histogram[angle][j] >= rules[VEHICLE_RAD]) && (histogram[angle][j] <= rules[SAFETY_DIS])){
-//                 std::cout << "distance: " << histogram[angle][j] << " error: " 
-//                      << calculateDistance(histogram[angle][j], angle) << " angle: " << angle << std::endl;
-//                 linear_w += CAL_YAW(i) * 0.5;
-//             }
-//         }
-//     }
-// }
-
 void ObstacleAvoidance::updateSetpoint(double & linear_x, double & linear_w){
     float error = 0.0f;
     bool is_change = false;
     for(int theta = 0; theta < VERTICAL; theta++){
         for(int phi = 0; phi < HORIZONTAL; phi++){
+            if(histogram[(phi % 20)][theta] < 0.80f ){
+                linear_x = 0.0;
+                std::cout << "STOP" << std::endl;
+                linear_w = -0.5;
+            }
             if(histogram[phi][theta] < calculateDistance(VEHICLE_RADIUS, phi)){  
                 continue;
             }else if((histogram[phi][theta] < (2.0 * CAL_FORCE(phi))) && (phi % 90 != 0)){
@@ -32,6 +23,13 @@ void ObstacleAvoidance::updateSetpoint(double & linear_x, double & linear_w){
     if(abs(linear_x) > OFSET  && abs(error) > OFSET){
         linear_w = error;
     }
+
+    last_point[LINEAR_V].x = linear_x;
+    first_point[ANGULAR_V].x = last_point[LINEAR_V].x;
+    last_point[ANGULAR_V].x = last_point[LINEAR_V].x;
+    last_point[ANGULAR_V].y = linear_w;
+    last_point[ORIENTATION_V].x = last_point[LINEAR_V].x;
+    last_point[ORIENTATION_V].y = last_point[ANGULAR_V].y;
 
 }
 

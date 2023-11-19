@@ -9,10 +9,12 @@
 
 #include "obstacle_avoidance.hpp"
 
-using joyMsg = sensor_msgs::msg::Joy;
+using joyMsg   = sensor_msgs::msg::Joy;
 using int32Msg = std_msgs::msg::Int32;
 using twistMsg = geometry_msgs::msg::Twist;
-using pointCloudMsg = sensor_msgs::msg::PointCloud2;
+using pointCloudMsg   = sensor_msgs::msg::PointCloud2;
+using markerArrayMsg  = visualization_msgs::msg::MarkerArray;
+
 
 typedef struct{
     rclcpp::Subscription<joyMsg>::SharedPtr joy;
@@ -20,6 +22,7 @@ typedef struct{
 } sub_t;
 
 typedef struct{
+    rclcpp::Publisher<markerArrayMsg>::SharedPtr markers;
     rclcpp::Publisher<twistMsg>::SharedPtr joy;
 } pub_t;
 
@@ -29,6 +32,7 @@ private:
     sub_t sub;
     pcl_t pcl_data;
     twistMsg data;
+    markerArrayMsg marker_array;
     rclcpp::TimerBase::SharedPtr obs_timer;
 
 public:
@@ -38,6 +42,7 @@ public:
     void pointCloudCallback(const pointCloudMsg &);
     void declareParameters();
     void initTopic();
+    void makerCallback();
 };
 
 #endif

@@ -24,12 +24,12 @@ include_directories(include)
 add_executable(controller_node ${SRC_FILE})
 
 ament_target_dependencies(controller_node 
-        rclcpp 
-        tf2_ros
-        pcl_ros
-        pcl_conversions
-        visualization_msgs                
-      sensor_msgs geometry_msgs
+    rclcpp 
+    tf2_ros
+    pcl_ros
+    pcl_conversions
+    visualization_msgs                
+    sensor_msgs geometry_msgs
 )
 
 install(
