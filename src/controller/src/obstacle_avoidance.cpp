@@ -14,7 +14,7 @@ void ObstacleAvoidance::updateSetpoint(double & linear_x, double & linear_w){
             }
             if(histogram[phi][theta] < calculateDistance(VEHICLE_RADIUS, phi)){  
                 continue;
-            }else if((histogram[phi][theta] < (2.0 * CAL_FORCE(phi))) && (phi % 90 != 0)){
+            }else if((histogram[phi][theta] < (2.2 * CAL_FORCE(phi))) && (phi % 90 != 0)){
                 if(linear_x * cosf(DEG2RAD * phi) > 0){
                     error += avoidanceDistance(histogram[phi][theta], phi);
                 }
