@@ -10,8 +10,6 @@ find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(sensor_msgs REQUIRED)
 
-add_definitions(-DBAUDRATE=B9600)
-
 file(GLOB_RECURSE SRC_FILE src/*.cpp)
 
 include_directories(include)

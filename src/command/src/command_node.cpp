@@ -39,17 +39,15 @@ bool Command::initPort(){
         std::cout << "Error " << errno << " from open : " << strerror(errno) << std::endl;
         return false;
     }
-
     if(!configure()){
         std::cout << "Error configure..." << std::endl;
         return false;
     }
-    
     usleep(1000000);
     return true;
 }
 
-bool Command::configure(){
+bool Command::configure(){ // Serial
     struct termios tty;
     if(tcgetattr(device.port, &tty) != 0){
         std::cout << "Error " << errno << " from tcgetattr : " << strerror(errno) << std::endl;
@@ -91,7 +89,7 @@ bool Command::configure(){
     return true;
 }
 
-void Command::dataRead(){
+void Command::dataRead(){ // esp8266 serial
     while (read(device.port, &data.curr_byte, 1) > 0){
         if(data.state == 0){
             if(data.curr_byte == HEADER_ && data.prev_byte == FOOTHER_){
@@ -106,10 +104,8 @@ void Command::dataRead(){
             data.state = 0;
             data.prev_byte = data.curr_byte;
             if(data.curr_byte == FOOTHER_){
-                joy_data.axes[0]    = mapValues(static_cast<float>(data.buffer[JOY_Y]), 0, 200, -1, 1);
-                joy_data.axes[1]    = mapValues(static_cast<float>(data.buffer[JOY_X]), 0, 200, 1, -1);
-                joy_data.buttons[1] = static_cast<int>(data.buffer[OBS_FLAG]);
-                joy_data.buttons[0] = static_cast<int>(data.buffer[ARM_FLAG]);
+                joy_data.axes[0] = mapValues(static_cast<float>(data.buffer[JOY_Y]), 0, 200, -1, 1);
+                joy_data.axes[1] = mapValues(static_cast<float>(data.buffer[JOY_X]), 0, 200, 1, -1);
                 command_pub->publish(joy_data);
             }else{
                 data.state = 0;
@@ -169,8 +165,6 @@ void Command::keyboardCallback(const int32Msg msg){
 void Command::joyCallback(const joyMsg msg){
     joy_data.axes[0] = msg.axes[1]; 
     joy_data.axes[1] = msg.axes[0];
-    joy_data.buttons[0] = msg.buttons[0];
-    joy_data.buttons[1] = msg.buttons[1]; 
     command_pub->publish(joy_data);
 }
 

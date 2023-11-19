@@ -16,6 +16,8 @@
 #define KEYCODE_D 68
 #define KEYCODE_X 88
 
+#define BAUDRATE B9600
+
 typedef enum {
     HEADER, JOY_X, JOY_Y, OBS_FLAG, 
     ARM_FLAG, FOOTHER, ALL_DATA
