@@ -29,7 +29,7 @@ rviz = ExecuteProcess(
     cmd=["rviz2"]
   )
 
-serial_node = Node(
+command_node = Node(
             package="command",                                               
             executable="command_node",
             parameters=[config_file],
@@ -102,7 +102,7 @@ joy_node = Node(
 
 def generate_launch_description():
     return LaunchDescription([
-        serial_node,
+        command_node,
         simulation,
         joy_node,
         # controller,
