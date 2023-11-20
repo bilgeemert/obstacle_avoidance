@@ -7,6 +7,19 @@ Command::Command(): Node("command_node"){
     memset(data.buffer, 0, sizeof(data.buffer));
 }
 
+void Command::keyboardControl(){
+    std::chrono::steady_clock::time_point current_time = std::chrono::steady_clock::now();
+    elapsed_time = current_time - last_msg_timestamp_;
+        std::cout << "timerı\n\n";
+
+     if (elapsed_time.count() > 100000000) {
+        command_pub->publish(joy_data);
+        std::cout << "bu kısı\n\n";
+
+    } 
+}
+
+
 void Command::controlSelection(){
     if(control_unit == "joy"){
         joy_sub = this->create_subscription<joyMsg>("joy", 10,
@@ -15,6 +28,8 @@ void Command::controlSelection(){
     } else if(control_unit == "keyboard"){ 
         keyboard_sub = this->create_subscription<int32Msg>("/keypress", 10,
                 std::bind(&Command::keyboardCallback, this, std::placeholders::_1));
+        keyboard_timer = this->create_wall_timer(std::chrono::milliseconds(100),
+                                        std::bind(&Command::keyboardControl, this)); 
 
     } else if(control_unit == "esp8266"){
         if(initPort()){
@@ -27,6 +42,7 @@ void Command::controlSelection(){
     }
 
     command_pub = this->create_publisher<joyMsg>("command_data", 10);
+    
 }
 
 Command::~Command(){
@@ -128,8 +144,6 @@ void Command::keyboardCallback(const int32Msg msg){
     bool is_ready = true;
     joy_data.axes[0] = 0.0;
     joy_data.axes[1] = 0.0;
-    joy_data.buttons[0] = 0;
-    joy_data.buttons[1] = 0;
 
     switch(msg.data){
       case KEYCODE_W:
@@ -158,6 +172,7 @@ void Command::keyboardCallback(const int32Msg msg){
     }
 
     if(is_ready){
+        last_msg_timestamp_ = std::chrono::steady_clock::now();
         command_pub->publish(joy_data);
     }
 }
