@@ -50,7 +50,7 @@
       <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/aws_robomaker_warehouse_ClutteringA_01</uri>
   </include>
   <include> <name>ClutteringA_3</name>
-      <pose>-6.57 3.44 0 0 0 0</pose>
+      <pose>-5.57 3.44 0 0 0 0</pose>
       <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/aws_robomaker_warehouse_ClutteringA_01</uri>
   </include>
   <include> <name>ClutteringA_5</name>
