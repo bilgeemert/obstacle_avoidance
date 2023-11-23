@@ -5,11 +5,6 @@ using namespace std::placeholders;
 LandVehicle::LandVehicle() : Node("land_vehicle_node"){
     declareParameters();
     initTopic();
-    for(int i=0; i < ALL_V; i++){
-        first_point[i].x = 0.0;
-        first_point[i].y = 0.0;
-        first_point[i].z = 0.0;
-    } 
 }
 
 void LandVehicle::joyCallback(const joyMsg &msg){
@@ -64,6 +59,11 @@ void LandVehicle::makerCallback(){
 void LandVehicle::declareParameters(){
     this->declare_parameter("rules", std::vector<double> (4, 0.0)); 
     rules = this->get_parameter("rules").as_double_array();
+    for(int i=0; i < ALL_V; i++){
+        first_point[i].x = 0.0;
+        first_point[i].y = 0.0;
+        first_point[i].z = 0.0;
+    } 
 }
 
 void LandVehicle::initTopic(){
