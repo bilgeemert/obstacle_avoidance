@@ -10,12 +10,9 @@ Command::Command(): Node("command_node"){
 void Command::keyboardControl(){
     std::chrono::steady_clock::time_point current_time = std::chrono::steady_clock::now();
     elapsed_time = current_time - last_msg_timestamp_;
-        std::cout << "timerı\n\n";
 
      if (elapsed_time.count() > 100000000) {
         command_pub->publish(joy_data);
-        std::cout << "bu kısı\n\n";
-
     } 
 }
 
@@ -36,13 +33,10 @@ void Command::controlSelection(){
             timer_ = this->create_wall_timer(std::chrono::milliseconds(),
                                         std::bind(&Command::dataRead, this));                          
         }
-
     } else{
         std::cout << "control off" << std::endl;
     }
-
     command_pub = this->create_publisher<joyMsg>("command_data", 10);
-    
 }
 
 Command::~Command(){
