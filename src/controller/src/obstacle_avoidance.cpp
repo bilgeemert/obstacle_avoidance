@@ -6,12 +6,17 @@ void ObstacleAvoidance::updateSetpoint(double & linear_x, double & linear_w){
     for(int theta = 0; theta < VERTICAL; theta++){
         for(int phi = 0; phi < HORIZONTAL; phi++){
             int angle = phi % 15;
-            if((histogram[angle][theta] < 0.80f) && (histogram[359 - angle][theta] < 0.80f) ){
+            if((histogram[angle][theta] < 0.90f) || (histogram[359 - angle][theta] < 0.90f) ){
                 linear_x = 0.0;
                 std::cout << "STOP" << std::endl;
-                int left_force = histogram[89][theta] + histogram[90][theta] + histogram[91][theta];
-                int right_force = histogram[269][theta] + histogram[270][theta] + histogram[271][theta];
-                linear_w = left_force > right_force ?  0.5 : -0.5;
+                int left_force = 0.0f;
+                int right_force = 0.0f;
+                for(int i = 70; i < 100; i++){
+                    left_force += histogram[i][theta];
+                    right_force += histogram[360 - i][theta];
+                }
+                linear_w = left_force >= right_force ?  0.5 : -0.5;
+                linear_x = -1.0;
             }
             if(histogram[phi][theta] < calculateDistance(VEHICLE_RADIUS, phi)){  
                 continue;
@@ -22,7 +27,7 @@ void ObstacleAvoidance::updateSetpoint(double & linear_x, double & linear_w){
             }
         }
     }
-    std::cout << " ERROR: " << error << "\n_______________________" << std::endl;
+    // std::cout << " ERROR: " << error << "\n_______________________" << std::endl;
     if(abs(linear_x) > OFSET  && abs(error) > OFSET){
         linear_w = error;
     }
@@ -42,7 +47,7 @@ float ObstacleAvoidance::calculateDistance(float distance, int angle) {
 
 float ObstacleAvoidance::avoidanceDistance(float distance, int angle){
     float kForce = -0.1f;
-    std::cout << " angle: " << angle << std::endl;
+    // std::cout << " angle: " << angle << std::endl;
     return kForce * cosf(DEG2RAD * angle) * sinf(DEG2RAD * angle) / distance;
 }
 
