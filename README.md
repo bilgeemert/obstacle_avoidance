@@ -72,3 +72,20 @@ ros2 launch  obstacle_avoidance  land_launch.py
 ```
 ros2 run controller controller_node --ros-args --params-file /home/${USER}/obstacle_avoidance/src/obstacle_avoidance/config/params.yaml
 ```
+
+### Project
+The project aims to create a semi-autonomous ground vehicle capable of navigating its environment and avoiding obstacles. The robot will use sensors such as Lidar. In the later stages, it will maintain its direction with the help of an IMU (Inertial Measurement Unit).
+
+- **Gazebo Garden:** Simulation settings can be modified by assigning the topic name `lidar` for the `lidar` window to display Lidar data. If it is desired to hide areas where detection is not performed, unchecking the `show non-hitting rays` option is recommended
+
+![Gazebo Garden](image/gazebo.png)
+
+- **Rviz2:** The Lidar sensor data is visualized in conjunction with the camera at the front of the vehicle, as well as the data from the joystick and the error information from obstacle avoidance. 
+    * The **RED** arrow represents the linear velocity.
+    * The **GREEN** arrow represents the angular velocity.
+    * The **BLUE** arrow represents the result vector.
+
+![Gazebo Garden](image/rviz.png)
+
+### Result 
+The vehicle is initialized in a specific environment. The user provides only the linear velocity command. In most cases, the vehicle successfully avoids obstacles by providing angular velocity. In some situations, when the vehicle gets too close to obstacles (enters the safety zone), the linear velocity command is reset, and the vehicle is directed to turn in a specific direction by examining right and left sensor data to avoid the obstacle.
