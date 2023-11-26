@@ -25,6 +25,8 @@ source ~/.bashrc  #or bash or simply restart the terminal
 - When using the 'bash' command to reload the terminal, it restarts the terminal session, while 'source ~/.bashrc' reloads the .bashrc file, applying the changes for the current session
 
 ```
+source /opt/ros/humble/setup.bash
+
 cd ~/obstacle_avoidance
 
 #Builds all files in the project.
@@ -35,6 +37,38 @@ colcon build --packages-select [package_name]
 ```
 
 ### Run
+
 ```
-source install/local_setup.bash
+source /opt/ros/humble/setup.bash
+source ~/obstacle_avoidance/install/setup.bash
+```
+- To avoid entering the **`~/obstacle_avoidance/install/setup.bash`** command every time a new terminal is opened, these commands are written to the **`~/.bashrc`** file.
+```
+echo "source /opt/ros/humble/setup.bash" >> ~/.bashrc
+echo "source /home/${USER}/obstacle_avoidance/install/setup.bash" >> ~/.bashrc
+```
+- The control method is specified in the 'control_unit' variable in the params file to control the vehicle. By default, it is set to keyboard control. If desired, it can also be controlled using a joystick or an ESP8266.
+1. **Keyboard controls are as follows:**
+
+    - 'w' for forward            
+    - 's' to stop                                                   
+    - 'x' for backward
+    - 'a' for right
+    - 'd' for left"
+```
+    w
+a   s    d
+    x
+```
+2. **Joystick control:** Control is achieved using the left joystick.
+3. **ESP8266 control:** Joy data is sent to the computer's serial port via an interface prepared using [RemoteXY](https://remotexy.com/en/editor/).
+    * To connect to the ESP8266 board, it is necessary to write the port to which the board is connected in the `file_name` variable in the params file. By default, it is `/dev/ttyUSB0`
+    * The RemoteXY application is downloaded to the phone, and to connect to the access point broadcasted by ESP8266, you connect to `Obstacle_Avoidance` in the Wi-Fi section. The password is `obstacle_avoidance`.
+- Instead of running each code individually, the launch file is executed.
+```
+ros2 launch  obstacle_avoidance  land_launch.py
+```
+- If files are to be launched individually, the path to the params file should be provided during the launch.
+```
+ros2 run controller controller_node --ros-args --params-file /home/${USER}/obstacle_avoidance/src/obstacle_avoidance/config/params.yaml
 ```
