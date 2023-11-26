@@ -1,5 +1,5 @@
 ## Land Vehicle Obstacle Avoidance
-This repository contains the source code for a ROS2 package that provides an implementation of a simple land vehicle obstacle avoidance system using the sensor
+This repository contains the source code for a ROS2 package that provides an implementation of a simple land vehicle obstacle avoidance system using the sensors
 
 ### System Requirements 
 - **OS:** [Ubuntu 22.04 (Jammy Jellyfish)](https://releases.ubuntu.com/jammy/)
@@ -8,8 +8,7 @@ This repository contains the source code for a ROS2 package that provides an imp
 
 ### Install
 ```
-mkdir ~/obstacle_avoidance
-cd ~/obstacle_avoidance
+cd ~/
 git clone https://github.com/bilgeemert/obstacle_avoidance
 ```
 
@@ -53,8 +52,8 @@ echo "source /home/${USER}/obstacle_avoidance/install/setup.bash" >> ~/.bashrc
     - 'w' for forward            
     - 's' to stop                                                   
     - 'x' for backward
-    - 'a' for right
-    - 'd' for left"
+    - 'a' for left
+    - 'd' for right
 ```
     w
 a   s    d
