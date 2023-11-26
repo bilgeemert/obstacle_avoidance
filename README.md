@@ -89,3 +89,9 @@ The project aims to create a semi-autonomous ground vehicle capable of navigatin
 
 ### Result 
 The vehicle is initialized in a specific environment. The user provides only the linear velocity command. In most cases, the vehicle successfully avoids obstacles by providing angular velocity. In some situations, when the vehicle gets too close to obstacles (enters the safety zone), the linear velocity command is reset, and the vehicle is directed to turn in a specific direction by examining right and left sensor data to avoid the obstacle.
+
+
+
+https://github.com/bilgeemert/obstacle_avoidance/assets/79978810/49e35912-d6f7-4025-8f00-1103b33972f5
+
+
