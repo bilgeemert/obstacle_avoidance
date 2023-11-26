@@ -8,7 +8,6 @@ void ObstacleAvoidance::updateSetpoint(double & linear_x, double & linear_w){
             int angle = phi % 15;
             if((histogram[angle][theta] < 0.90f) || (histogram[359 - angle][theta] < 0.90f) ){
                 linear_x = 0.0;
-                std::cout << "STOP" << std::endl;
                 int left_force = 0.0f;
                 int right_force = 0.0f;
                 for(int i = 70; i < 100; i++){

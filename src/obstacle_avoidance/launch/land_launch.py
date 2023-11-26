@@ -83,6 +83,7 @@ bridge_imu = Node(
 controller = Node(
             package="controller",                                               
             executable="controller_node",
+            parameters=[config_file],
             output="screen"
           )
 
@@ -105,8 +106,8 @@ def generate_launch_description():
         command_node,
         simulation,
         joy_node,
-        # controller,
-        # rviz,
+        controller,
+        rviz,
         
         bridge_keyboard,
         bridge_control,
