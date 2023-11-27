@@ -65,7 +65,7 @@ a   s    d
     * The RemoteXY application is downloaded to the phone, and to connect to the access point broadcasted by ESP8266, you connect to `Obstacle_Avoidance` in the Wi-Fi section. The password is `obstacle_avoidance`.
 - Instead of running each code individually, the launch file is executed.
 ```
-ros2 launch  obstacle_avoidance  land_launch.py
+ros2 launch  simulation  land_launch.py
 ```
 - If files are to be launched individually, the path to the params file should be provided during the launch.
 ```

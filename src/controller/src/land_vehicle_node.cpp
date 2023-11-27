@@ -8,8 +8,8 @@ LandVehicle::LandVehicle() : Node("land_vehicle_node"){
 }
 
 void LandVehicle::joyCallback(const joyMsg &msg){
-    data.linear.x  = UPDATE_DATA(msg.axes[0]);
-    data.angular.z = UPDATE_DATA(msg.axes[1]);
+    data.linear.x  = OFFSET_EXCEPTION(msg.axes[0]);
+    data.angular.z = OFFSET_EXCEPTION(msg.axes[1]);
     obstacleAvoidance();
 }
 
@@ -58,7 +58,9 @@ void LandVehicle::makerCallback(){
 
 void LandVehicle::declareParameters(){
     this->declare_parameter("rules", std::vector<double> (4, 0.0)); 
+    this->declare_parameter("sensor", std::vector<double> (2, 0.0)); 
     rules = this->get_parameter("rules").as_double_array();
+    sensor = this->get_parameter("sensor").as_double_array();
     for(int i=0; i < ALL_V; i++){
         first_point[i].x = 0.0;
         first_point[i].y = 0.0;
@@ -69,7 +71,7 @@ void LandVehicle::declareParameters(){
 void LandVehicle::initTopic(){
     sub.joy = this->create_subscription<joyMsg>("command_data", 10, std::bind(
                                 &LandVehicle::joyCallback, this, _1));
-    sub.cloud = this->create_subscription<pointCloudMsg>("/lidar", 100, std::bind(
+    sub.cloud = this->create_subscription<pointCloudMsg>("lidar", 100, std::bind(
                                 &LandVehicle::pointCloudCallback, this, _1));
 
     pub.joy = this->create_publisher<twistMsg>("cmd_vel", 10);

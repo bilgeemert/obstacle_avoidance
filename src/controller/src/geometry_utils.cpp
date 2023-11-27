@@ -15,14 +15,48 @@ float normalizeAngle(float angle){
     return angle;
 }
 
-void body2World(float* body_frame, float* world_frame, float yaw ){
-    world_frame[X] = body_frame[X] * cosf(yaw) - body_frame[Y] * sinf(yaw);
-    world_frame[Y] = body_frame[X] * sinf(yaw) + body_frame[Y] * cosf(yaw);
+Eigen::Matrix3f R_x(float phi){
+    Eigen::Matrix3f rx; 
+    rx <<   1, 0, 0,
+            0, cos(phi), -sin(phi),
+            0, sin(phi), cos(phi);
+    return rx;
 }
 
-void world2Body(float* world_frame, float* body_frame, float yaw){
-    body_frame[X] = world_frame[X] * cosf(yaw) + world_frame[Y] * sinf(yaw);
-    body_frame[Y] = -world_frame[X] * sinf(yaw) + world_frame[Y] * cosf(yaw);
+Eigen::Matrix3f R_y(float beta){
+    Eigen::Matrix3f ry;
+    ry << cos(beta), 0, sin(beta),
+          0, 1, 0,
+         -sin(beta), 0, cos(beta);
+    return ry;
+}
+
+Eigen::Matrix3f R_z(float theta){
+    Eigen::Matrix3f rz;
+    rz << cos(theta), -sin(theta), 0,
+          sin(theta), cos(theta), 0,
+          0, 0, 1;
+    return rz;
+}
+
+Eigen::Matrix3f calculateRotationMatrix(float angle[]){
+    return R_z(angle[YAW]) * R_y(angle[PITCH]) * R_x(angle[ROLL]);
+}
+
+Eigen::Matrix3f calculateRotationMatrix(float roll, float pitch, float yaw){
+    return R_z(yaw) * R_y(pitch) * R_x(roll);
+}
+
+void rotasyonTransformation(float* out[], float angle[]){
+	Eigen::Matrix <float, 3, 1> input;
+    Eigen::Matrix <float, 3, 1> result;
+
+	input << *out[0] , *out[1], *out[2];
+	result = calculateRotationMatrix(angle) * input;
+
+	*out[0] = result(0, 0);
+	*out[1] = result(1, 0);
+	*out[2] = result(2, 0);
 }
 
 void cartesian2Spherical(float* cart_data, float* spe_data){

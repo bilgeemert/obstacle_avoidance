@@ -16,7 +16,7 @@
 
 #include "geometry_msgs/msg/point.hpp"
 
-#include "land_vehicle_type.hpp"
+#include "controller_type.hpp"
 #include "geometry_utils.hpp"
 
 typedef struct {
@@ -24,13 +24,10 @@ typedef struct {
 	pcl::PointCloud<pcl::PointXYZ> cloud;
 }pcl_t;
 
-typedef enum{ LINEAR_V, ANGULAR_V, ORIENTATION_V, ALL_V } velocity_e;
-
 using markerMsg       = visualization_msgs::msg::Marker;
 using pointXYZMsg     = pcl::PointCloud<pcl::PointXYZ>;
 using pointMsg        = geometry_msgs::msg::Point;
 using pointIndicesMsg = std::vector<pcl::PointIndices>;
-
 
 class ObstacleAvoidance{
 private:
@@ -38,17 +35,18 @@ private:
 
 protected:
     std::vector<double> rules;
+    std::vector<double> sensor;
     pointMsg first_point[ALL_V];
     pointMsg last_point[ALL_V];
 
 public:
-    void detectObject(pointXYZMsg&);
-    void getClusterPoint(pointIndicesMsg& , pointXYZMsg&);
-    void updateHistogram(float*);
     void clearHistogram();
-    void updateSetpoint(double &, double &);
+    void updateHistogram(float*);
+    void detectObject(pointXYZMsg&);
     float calculateDistance(float, int);
     float avoidanceDistance(float, int);
+    void updateSetpoint(double &, double &);
+    void getClusterPoint(pointIndicesMsg& , pointXYZMsg&);
 };
 
 #endif

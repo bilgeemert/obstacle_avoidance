@@ -114,8 +114,8 @@ void Command::dataRead(){ // esp8266 serial
             data.state = 0;
             data.prev_byte = data.curr_byte;
             if(data.curr_byte == FOOTHER_){
-                joy_data.axes[0] = mapValues(static_cast<float>(data.buffer[JOY_Y]), 0, 200, -1, 1);
-                joy_data.axes[1] = mapValues(static_cast<float>(data.buffer[JOY_X]), 0, 200, 1, -1);
+                joy_data.axes[0] = map(static_cast<float>(data.buffer[JOY_Y]), 0, 200, -1, 1);
+                joy_data.axes[1] = map(static_cast<float>(data.buffer[JOY_X]), 0, 200, 1, -1);
                 command_pub->publish(joy_data);
             }else{
                 data.state = 0;
@@ -177,7 +177,7 @@ void Command::joyCallback(const joyMsg msg){
     command_pub->publish(joy_data);
 }
 
-double mapValues(double data, double in_min, double in_max, double out_min, double out_max){   
+double map(double data, double in_min, double in_max, double out_min, double out_max){   
   return ((((data - in_min)*(out_max - out_min))/(in_max - in_min)) + out_min);
 }
 

@@ -17,9 +17,9 @@ void ObstacleAvoidance::updateSetpoint(double & linear_x, double & linear_w){
                 linear_w = left_force >= right_force ?  0.5 : -0.5;
                 linear_x = -1.0;
             }
-            if(histogram[phi][theta] < calculateDistance(VEHICLE_RADIUS, phi)){  
+            if(histogram[phi][theta] < calculateDistance(rules[VEHICLE_WIDTH], phi)){  
                 continue;
-            }else if((histogram[phi][theta] < (2.2 * CAL_FORCE(phi))) && (phi % 90 != 0)){
+            }else if((histogram[phi][theta] < (2.2 * DETECT_RANGE(phi))) && (phi % 90 != 0)){
                 if(linear_x * cosf(DEG2RAD * phi) > 0){
                     error += avoidanceDistance(histogram[phi][theta], phi);
                 }
@@ -35,8 +35,8 @@ void ObstacleAvoidance::updateSetpoint(double & linear_x, double & linear_w){
     first_point[ANGULAR_V].x = last_point[LINEAR_V].x;
     last_point[ANGULAR_V].x = last_point[LINEAR_V].x;
     last_point[ANGULAR_V].y = linear_w;
-    last_point[ORIENTATION_V].x = last_point[LINEAR_V].x;
-    last_point[ORIENTATION_V].y = last_point[ANGULAR_V].y;
+    last_point[RESULT_V].x = last_point[LINEAR_V].x;
+    last_point[RESULT_V].y = last_point[ANGULAR_V].y;
 
 }
 
@@ -46,7 +46,6 @@ float ObstacleAvoidance::calculateDistance(float distance, int angle) {
 
 float ObstacleAvoidance::avoidanceDistance(float distance, int angle){
     float kForce = -0.1f;
-    // std::cout << " angle: " << angle << std::endl;
     return kForce * cosf(DEG2RAD * angle) * sinf(DEG2RAD * angle) / distance;
 }
 
@@ -56,7 +55,7 @@ void ObstacleAvoidance::detectObject(pointXYZMsg& cloud_data){
     pcl::search::KdTree<pcl::PointXYZ>::Ptr tree (new pcl::search::KdTree<pcl::PointXYZ>);
     pcl::EuclideanClusterExtraction<pcl::PointXYZ> ec;
     *cloud_m = cloud_data;
-    ec.setClusterTolerance(rules[OBJECT_WIDTH]); 
+    ec.setClusterTolerance(rules[VEHICLE_WIDTH]); 
     tree->setInputCloud(cloud_m);
     ec.setMinClusterSize(2);
     ec.setMaxClusterSize(1000);
@@ -81,7 +80,7 @@ void ObstacleAvoidance::getClusterPoint(pointIndicesMsg& indices_c, pointXYZMsg&
 
 void ObstacleAvoidance::updateHistogram(float* cc_data){
     float distance = sqrtf(powf(cc_data[X], 2) + powf(cc_data[Y], 2) + powf(cc_data[Z], 2));
-    if((distance > MIN_DISTANCE) && (distance < MAX_DISTANCE)){
+    if((distance > sensor[MIN_DIS]) && (distance < sensor[MAX_DIS])){
         Coordinate_t spherical;
         cartesian2Spherical(cc_data, spherical.pos);
         histogram[spherical.pos[PHI]][spherical.pos[THETA]] = spherical.pos[RADIUS];
@@ -90,6 +89,6 @@ void ObstacleAvoidance::updateHistogram(float* cc_data){
 
 void ObstacleAvoidance::clearHistogram(){
     for(int i = 0; i < HORIZONTAL; i++){
-            histogram[i].fill(MAX_DISTANCE);
+            histogram[i].fill(sensor[MAX_DIS]);
     }
 }

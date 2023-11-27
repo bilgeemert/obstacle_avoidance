@@ -34,14 +34,14 @@ private:
 public:
     Command();
     ~Command();
-    void controlSelection();
-    void keyboardCallback(const int32Msg);
-    void keyboardControl();
-    void joyCallback(const joyMsg);
     bool initPort();
-    bool configure();
     void dataRead();
+    bool configure();
     void initParam();
+    void keyboardControl();
+    void controlSelection();
+    void joyCallback(const joyMsg);
+    void keyboardCallback(const int32Msg);
 };
 
 #endif

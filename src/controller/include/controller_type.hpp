@@ -5,30 +5,45 @@
 
 #define OFSET 0.1f
 
-#define VEHICLE_RADIUS (0.33f)
-#define SAFETY_VEHICLE ()
-#define MAX_DISTANCE (3.5f)
-#define MIN_DISTANCE (0.0f)
-
 #define F2P(x) (1000/x)
 #define DEG2RAD (M_PI/180.0f)
 #define RAD2DEG (180.0f/M_PI)
 
 #define VERTICAL   181 
 #define HORIZONTAL 360
+
 #define ERROR (-1)
 #define OK    (1)
 
-#define CAL_YAW(X) (X < 0 ? 0.1 : -0.1)
-#define UPDATE_DATA(x) (abs(x) > OFSET ? x : 0.0f) 
-#define CAL_FORCE(X) abs(std::pow((cosf(DEG2RAD * X)), 3))
+#define COEF(X) (X < 0 ? 0.1 : -0.1)
+#define DETECT_RANGE(X) abs(std::pow((cosf(DEG2RAD * X)), 3))
 
-typedef enum { X, Y, Z, ALL_CC } cc_mode_t;
-typedef enum { RADIUS, THETA, PHI, ALL_SC } sc_mode_t;
+#define OFFSET_EXCEPTION(x) (abs(x) > OFSET ? x : 0.0f) 
+
+typedef enum { 
+  X, Y, Z, ALL_CC 
+} cc_mode_e;
+
+typedef enum { 
+  RADIUS, THETA, PHI, ALL_SC 
+} sc_mode_e;
+
 typedef enum {
   THRESHOLD_DIS, SAFETY_DIS, VEHICLE_RAD, 
-  OBJECT_WIDTH, OBS_ALL
-} obs_config_t;
+  VEHICLE_WIDTH, OBS_ALL
+} rules_e;
+
+typedef enum {
+  MAX_DIS, MIN_DIS, SENSOR_ALL
+} sensor_rules_e;
+
+typedef enum{ 
+  LINEAR_V, ANGULAR_V, RESULT_V, ALL_V 
+} velocity_e;
+
+typedef enum { 
+  ROLL, PITCH, YAW, R_ALL
+} rotation_angle_t;
 
 typedef struct{
     union{
@@ -46,16 +61,13 @@ typedef struct{
     };
 }Coordinate_t;
 
-typedef enum {
-  LINEAR, ANGULAR, SPEED_ALL_DATA
-} Joy_e;
-
 typedef union{
   struct{
     float linear;
     float angular;
+    float result;
   };
-  float data[SPEED_ALL_DATA];
+  float data[ALL_V];
 }Joy_t;
 
 #endif

@@ -37,6 +37,6 @@ typedef struct{
     uint8_t buffer[ALL_DATA];
 } rx_t;
 
-double mapValues(double, double, double, double, double);
+double map(double, double, double, double, double);
 
 #endif
